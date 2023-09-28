@@ -104,14 +104,17 @@ export const getDetail = createAsyncThunk('user/profileDetails', async (id) => {
 
 export const getProfile = createAsyncThunk('user/getUser', async () => {
     try{
+        const token = cookie.get('token')
         const {data} = await axios.get(`${REACT_APP_BASE_URL}/me`,
             {
                 headers:{
-                    "Content-Type":'application/json'
+                    "Content-Type":'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 withCredentials: true
             }
         )
+        
         return data.user
     }catch(error){
         return error
