@@ -70,10 +70,12 @@ export const postEditProfile = (name,bio,bannerImg,Avatar) => async (dispatch) =
 
 export const logoutUser = createAsyncThunk('userLogout/logout', async () => {
     try{
+        const token = cookie.get('token')
         const {data} = await axios.get(`${REACT_APP_BASE_URL}/logout`,
             {
                 headers:{
-                    "Content-Type":'application/json'
+                    "Content-Type":'application/json',
+                    Authorization: `Bearer ${token}`
                 },
                 withCredentials: true
             }
@@ -87,10 +89,12 @@ export const logoutUser = createAsyncThunk('userLogout/logout', async () => {
 
 export const getDetail = createAsyncThunk('user/profileDetails', async (id) => {
     try{
+        const token = cookie.get('token')
         const {data} = await axios.get(`${REACT_APP_BASE_URL}/getUserDetail/${id}`,
             {
                 headers:{
-                    "Content-Type":'application/json'
+                    "Content-Type":'application/json',
+                    Authorization: `Bearer ${token}`
                 },
                 withCredentials: true
             }
@@ -104,17 +108,17 @@ export const getDetail = createAsyncThunk('user/profileDetails', async (id) => {
 
 export const getProfile = createAsyncThunk('user/getUser', async () => {
     try{
+        const token = cookie.get('token')
         const {data} = await axios.get(`${REACT_APP_BASE_URL}/me`,
             {
                 headers:{
-                    "Content-Type":'application/json'
+                    "Content-Type":'application/json',
+                    Authorization: `Bearer ${token}`
                 },
                 withCredentials: true
             }
         )
-        cookie.set("token",data.token,{
-            path:'/'
-        })
+        
         return data.user
     }catch(error){
         return error
