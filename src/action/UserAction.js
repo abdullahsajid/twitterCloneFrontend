@@ -127,12 +127,14 @@ export const getProfile = createAsyncThunk('user/getUser', async () => {
 
 export const postTweet = (caption) => async (dispatch) => {
     try{
+        const token = cookie.get('token')
         dispatch(tweetReq())
 
         const {data} = await axios.post(`${REACT_APP_BASE_URL}/post`,{caption},
             {
                 headers:{
-                    "Content-Type":'application/json'
+                    "Content-Type":'application/json',
+                    Authorization: `Bearer ${token}`
                 },
                 withCredentials: true
             }
@@ -164,11 +166,13 @@ export const gettingTweets = () => async (dispatch) => {
 
 export const postLike = (_id) => async (dispatch) => {
     try{
+        const token = cookie.get('token')
         dispatch(likeReq())
         const{data} = await axios.get(`${REACT_APP_BASE_URL}/postLike/${_id}`,
             {
                 headers:{
-                    "Content-Type":'application/json'
+                    "Content-Type":'application/json',
+                    Authorization: `Bearer ${token}`
                 },
                 withCredentials: true
             }
@@ -181,10 +185,12 @@ export const postLike = (_id) => async (dispatch) => {
 
 export const postComment = createAsyncThunk('postComment/comment', async ({_id,comment}) => {
     try{
+        const token = cookie.get('token')
         const {data} = await axios.post(`${REACT_APP_BASE_URL}/comment/${_id}`,{comment},
             {
                 headers:{
-                    "Content-Type":'application/json'
+                    "Content-Type":'application/json',
+                    Authorization: `Bearer ${token}`
                 },
                 withCredentials: true
             }
@@ -198,10 +204,13 @@ export const postComment = createAsyncThunk('postComment/comment', async ({_id,c
 
 export const getAllPost = createAsyncThunk('allPost/Post',async() => {
     try{
+        const token = cookie.get('token')
         const res = await axios.get(`${REACT_APP_BASE_URL}/getAllPost`,
             {
                 headers:{
-                    "Content-Type":'application/json'
+                    "Content-Type":'application/json',
+                    Authorization: `Bearer ${token}`
+
                 },
                 withCredentials: true
             }
@@ -214,10 +223,12 @@ export const getAllPost = createAsyncThunk('allPost/Post',async() => {
 
 export const getAllUser = createAsyncThunk('allUser/User',async() => {
     try{
+        const token = cookie.get('token')
         const res = await axios.get(`${REACT_APP_BASE_URL}/getAllUser`,
             {
                 headers:{
-                    "Content-Type":'application/json'
+                    "Content-Type":'application/json',
+                    Authorization: `Bearer ${token}`
                 },
                 withCredentials: true
             }
@@ -230,10 +241,12 @@ export const getAllUser = createAsyncThunk('allUser/User',async() => {
 
 export const bookmarkPost = createAsyncThunk('markPost/bookmarkPost', async({_id}) => {
     try{
+        const token = cookie.get('token')
         const {data} = await axios.get(`${REACT_APP_BASE_URL}/postBookmark/${_id}`,
             {
                 headers:{
-                    "Content-Type":'application/json'
+                    "Content-Type":'application/json',
+                    Authorization: `Bearer ${token}`
                 },
                 withCredentials: true
             }
@@ -263,10 +276,12 @@ export const getBookmark = createAsyncThunk('getBookmark/bookmark',async () =>{
 
 export const getAllProfile = createAsyncThunk('getAllProfile/profiles',async () => {
     try{
+        const token = cookie.get('token')
         const {data} = await axios.get(`${REACT_APP_BASE_URL}/getAllProfile`,
             {
                 headers:{
-                    "Content-Type":'application/json'
+                    "Content-Type":'application/json',
+                    Authorization: `Bearer ${token}`
                 },
                 withCredentials: true
             }
@@ -311,10 +326,12 @@ export const followOtherUser = createAsyncThunk('follower/follow', async ({_id})
 
 export const getLatestPost = createAsyncThunk('getLatestPost/post', async () => {
     try{
+        const token = cookie.get('token')
         const {data} = await axios.get(`${REACT_APP_BASE_URL}/latestPost`,
             {
                 headers:{
-                    "Content-Type":'application/json'
+                    "Content-Type":'application/json',
+                    Authorization: `Bearer ${token}`
                 },
                 withCredentials: true
             }
