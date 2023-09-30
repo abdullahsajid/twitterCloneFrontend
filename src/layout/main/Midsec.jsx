@@ -116,7 +116,6 @@ function Midsec() {
                 <>
                 {latestPost.map((data,index) =>{
                     const item  = allpost?.find((val) => val.Owner == data.owner)
-                    console.log(item)
                     const getMail = alluser?.find((val) => val._id == data.owner)
                     const email = getMail?.email.split('@')[0]
                     return <Tweets

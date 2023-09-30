@@ -48,13 +48,15 @@ export const registerUser = createAsyncThunk('registerUser/register', async ({em
 
 export const postEditProfile = (name,bio,bannerImg,Avatar) => async (dispatch) => {
     try{
+        const token = cookie.get('token')
         dispatch(editProfileReq())
-
         const {data} = await axios.post(`${REACT_APP_BASE_URL}/editProfile`,{name,bio,bannerImg,Avatar},
         {
             headers:{
-                "Content-Type":'application/json'
+                "Content-Type":'application/json',
+                Authorization: `Bearer ${token}`
             },
+            credentials: "include",
             withCredentials: true
         }
         )
@@ -150,14 +152,16 @@ export const postTweet = (caption) => async (dispatch) => {
 
 export const gettingTweets = () => async (dispatch) => {
     try{
+        const token = cookie.get('token')
         dispatch(getTweetReq())
 
         const {data} = await axios.get(`${REACT_APP_BASE_URL}/getPosts`,
             {
                 headers:{
-                    "Content-Type":'application/json'
+                    "Content-Type":'application/json',
+                    Authorization: `Bearer ${token}`
                 },
-
+                credentials: "include",
                 withCredentials: true
             }
         )
@@ -178,6 +182,7 @@ export const postLike = (_id) => async (dispatch) => {
                     "Content-Type":'application/json',
                     Authorization: `Bearer ${token}`
                 },
+                credentials: "include",
                 withCredentials: true
             }
         )
@@ -267,11 +272,14 @@ export const bookmarkPost = createAsyncThunk('markPost/bookmarkPost', async({_id
 
 export const getBookmark = createAsyncThunk('getBookmark/bookmark',async () =>{
     try{
+        const token = cookie.get('token')
         const res = await axios.get(`${REACT_APP_BASE_URL}/getBookmark`,
             {
                 headers:{
-                    "Content-Type":'application/json'
+                    "Content-Type":'application/json',
+                    Authorization: `Bearer ${token}`
                 },
+                credentials: "include",
                 withCredentials: true
             }
         )
@@ -302,11 +310,14 @@ export const getAllProfile = createAsyncThunk('getAllProfile/profiles',async () 
 
 export const followUser = createAsyncThunk('followUser/follow', async ({_id}) => {
     try{
+        const token = cookie.get('token')
         const {data} = await axios.get(`${REACT_APP_BASE_URL}/following/${_id}`,
             {
                 headers:{
-                    "Content-Type":'application/json'
+                    "Content-Type":'application/json',
+                    Authorization: `Bearer ${token}`
                 },
+                credentials: "include",
                 withCredentials: true
             }
         )
@@ -318,11 +329,14 @@ export const followUser = createAsyncThunk('followUser/follow', async ({_id}) =>
 
 export const followOtherUser = createAsyncThunk('follower/follow', async ({_id}) => {
     try{
+        const token = cookie.get('token')
         const {data} = await axios.get(`${REACT_APP_BASE_URL}/follower/${_id}`,
             {
                 headers:{
-                    "Content-Type":'application/json'
+                    "Content-Type":'application/json',
+                    Authorization: `Bearer ${token}`
                 },
+                credentials: "include",
                 withCredentials: true
             }
         )
