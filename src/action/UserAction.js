@@ -7,7 +7,6 @@ import {tweetReq,tweetSuccess,tweetFail} from '../reducer/tweet'
 import {getTweetReq,getTweetSuccess,getTweetFail} from '../reducer/getTweets'
 import {likeReq,likeSuccess,likeFail} from '../reducer/likePost'
 
-
 const cookie = new Cookies()
 const {REACT_APP_BASE_URL} = process.env
 
@@ -77,6 +76,7 @@ export const logoutUser = createAsyncThunk('userLogout/logout', async () => {
                     "Content-Type":'application/json',
                     Authorization: `Bearer ${token}`
                 },
+                credentials: "include",
                 withCredentials: true
             }
         )
@@ -96,6 +96,7 @@ export const getDetail = createAsyncThunk('user/profileDetails', async (id) => {
                     "Content-Type":'application/json',
                     Authorization: `Bearer ${token}`
                 },
+                credentials: "include",
                 withCredentials: true
             }
         )
@@ -115,6 +116,7 @@ export const getProfile = createAsyncThunk('user/getUser', async () => {
                     "Content-Type":'application/json',
                     Authorization: `Bearer ${token}`
                 },
+                credentials: "include",
                 withCredentials: true
             }
         )
@@ -136,6 +138,7 @@ export const postTweet = (caption) => async (dispatch) => {
                     "Content-Type":'application/json',
                     Authorization: `Bearer ${token}`
                 },
+                credentials: "include",
                 withCredentials: true
             }
         )
@@ -154,6 +157,7 @@ export const gettingTweets = () => async (dispatch) => {
                 headers:{
                     "Content-Type":'application/json'
                 },
+
                 withCredentials: true
             }
         )
@@ -192,6 +196,7 @@ export const postComment = createAsyncThunk('postComment/comment', async ({_id,c
                     "Content-Type":'application/json',
                     Authorization: `Bearer ${token}`
                 },
+                credentials: "include",
                 withCredentials: true
             }
         )
@@ -210,8 +215,8 @@ export const getAllPost = createAsyncThunk('allPost/Post',async() => {
                 headers:{
                     "Content-Type":'application/json',
                     Authorization: `Bearer ${token}`
-
                 },
+                credentials: "include",
                 withCredentials: true
             }
         )
@@ -230,6 +235,7 @@ export const getAllUser = createAsyncThunk('allUser/User',async() => {
                     "Content-Type":'application/json',
                     Authorization: `Bearer ${token}`
                 },
+                credentials: "include",
                 withCredentials: true
             }
         )
@@ -248,6 +254,7 @@ export const bookmarkPost = createAsyncThunk('markPost/bookmarkPost', async({_id
                     "Content-Type":'application/json',
                     Authorization: `Bearer ${token}`
                 },
+                credentials: "include",
                 withCredentials: true
             }
         )
@@ -283,6 +290,7 @@ export const getAllProfile = createAsyncThunk('getAllProfile/profiles',async () 
                     "Content-Type":'application/json',
                     Authorization: `Bearer ${token}`
                 },
+                credentials: "include",
                 withCredentials: true
             }
         )
@@ -333,6 +341,7 @@ export const getLatestPost = createAsyncThunk('getLatestPost/post', async () => 
                     "Content-Type":'application/json',
                     Authorization: `Bearer ${token}`
                 },
+                credentials: "include",
                 withCredentials: true
             }
         )
