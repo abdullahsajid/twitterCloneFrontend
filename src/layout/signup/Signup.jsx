@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { registerUser } from '../../action/UserAction'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
+import { Oval } from 'react-loader-spinner'
 const Signup = ({show}) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -18,12 +19,11 @@ const Signup = ({show}) => {
      
       if(register){
         const user = dispatch(registerUser({email,password}))
-        // console.log(user)
         if(user){
           setEmail('')
           setPassword('')
           setConfirmPass('')
-          toast.success('successfully signUp',{
+          toast.success('successfully signUp move to login',{
             style: {
               borderRadius: '10px',
               border: "1px solid #38444D",
@@ -46,6 +46,7 @@ const Signup = ({show}) => {
       console.log('wrong password!')
     }
   }
+  const {loading} = useSelector((state) => state.registerUser)
   return (
     <div className='fixed top-0 z-10'>
       <div className='flex justify-center items-center w-screen h-screen'>
@@ -102,7 +103,14 @@ const Signup = ({show}) => {
                 </div>
         
                 <button type='submit' onClick={handleSubmit} className='flex justify-center items-center rounded-full cursor-pointer mt-7 bg-white ' style={{width:"100%",maxWidth:"600px",minWidth:"36px",height:"40px",borderColor: "rgb(83, 100, 113)",border: ".5px solid"}}>
-                    <button  className='text-black'>Sign up</button>
+                  {loading ? <Oval
+                            height={30}
+                            width='100%'
+                            color="rgb(120, 86, 255)"
+                            secondaryColor="rgb(120, 86, 255)"
+                            strokeWidth={3}
+                            />:
+                    <button  className='text-black'>Sign up</button>}
                 </button>
             </form>
 

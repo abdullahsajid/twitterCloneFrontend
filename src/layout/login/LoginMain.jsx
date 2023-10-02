@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import { loginUser } from '../../action/UserAction'
 import { useNavigate } from 'react-router-dom'
-import toast from 'react-hot-toast'
+import toast, { LoaderIcon } from 'react-hot-toast'
+import { Oval } from 'react-loader-spinner'
 
 const LoginMain = ({show}) => {
   const navigate = useNavigate()
@@ -34,7 +35,7 @@ const LoginMain = ({show}) => {
     }
     
   } 
-  
+  const {loading} = useSelector((state)=>state.userLogin)
   return (
     <div className='fixed top-0 z-10'>
       <div className='flex justify-center items-center w-screen h-screen'>
@@ -65,7 +66,14 @@ const LoginMain = ({show}) => {
                   <input id='pass' value={password} onChange={(e) => setPassword(e.target.value)} className='border border-slate-300 rounded-md px-1 py-2 w-full shadow-sm focus:outline-none mt-2' style={{background:"none"}} type="password" />
                 </div>
                 <button onClick={handleChecker} className='flex justify-center items-center rounded-full cursor-pointer mt-7 bg-white' style={{width:"300px",maxWidth:"300px",minWidth:"36px",height:"40px",borderColor: "rgb(83, 100, 113)",border: ".5px solid"}}>
-                    <span className='text-black'>log in</span>
+                    {loading ? <Oval
+                            height={30}
+                            width='100%'
+                            color="rgb(120, 86, 255)"
+                            secondaryColor="rgb(120, 86, 255)"
+                            strokeWidth={3}
+                            /> : 
+                    <span className='text-black'>log in</span>}
                 </button>
                 <div className='mt-16 mb-5' style={{width:"300px",maxWidth:"300px",minWidth:"36px",wordWrap:"break-word"}}>
                     <span className='tracking-wide text-sm' style={{color: "rgb(113, 118, 123)"}}>Don't have an account? </span>

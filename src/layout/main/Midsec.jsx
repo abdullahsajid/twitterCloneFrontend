@@ -11,19 +11,20 @@ function Midsec() {
     const[tweetTxt,setTweetTxt] = useState('')
     const userData = useSelector((state) => state.user.user)
     const profileData = useSelector((state) => state.profile.user)
-    const[condition,setCondition] = useState(true)
-    const setTime = () => {
-        setTimeout(() => {
-            setCondition(false)
-        },2000)
-    }
-    useEffect(() => {
-        setTime()
-    },[])
     
     const handlerSubmit =  (e) => {
         e.preventDefault()
         try{
+            if(tweetTxt === ''){
+                return toast.error("Nothing there! ",{
+                    style: {
+                        borderRadius: '10px',
+                        border: "1px solid #38444D",
+                        background: '#15202B',
+                        color: '#fff',
+                    }
+                })
+            }
             const addPost = dispatch(postTweet(tweetTxt))
             if(addPost){
                 toast.success('post successfully created!',{
@@ -47,14 +48,18 @@ function Midsec() {
             })
         }
     }
+    
     useEffect(()=>{
         dispatch(getLatestPost())
         dispatch(getAllUser())
         dispatch(getAllPost())
     },[dispatch])
+
     const {latestPost} = useSelector((state)=>state.getLatestPost.getLatestPost)
+    const {loading} = useSelector((state)=> state.getLatestPost)
     const {allpost} = useSelector((state) => state.allPost.allPost)
     const {alluser} = useSelector((state) => state.allUser.allUser)
+
     return (
         <div className="Mid">
             <div className="navbar">
@@ -66,7 +71,7 @@ function Midsec() {
             </div>
             <form className="home-area">
                 <div className="add-tweet">
-                    {profileData &&  (<img src={`${(profileData.details) ? profileData.details.Avatar.url : "https://ionicframework.com/docs/img/demos/avatar.svg"}`} />)}
+                    {profileData ? (<img src={`${(profileData.details) ? profileData.details.Avatar.url : "https://ionicframework.com/docs/img/demos/avatar.svg"}`} />): (<img src={`https://ionicframework.com/docs/img/demos/avatar.svg`}/>)}
                     <textarea cols="45" rows="1" value={tweetTxt} onChange={(e) => setTweetTxt(e.target.value)} placeholder="What's happening?"></textarea>
                 </div>
                 <div className="add-tweet-imgs">
@@ -102,7 +107,7 @@ function Midsec() {
                     </div>
                 </div>
             </form>
-            {condition ? (
+            {loading ? (
                 <div style={{display:'flex',justifyContent:'center',alignItems:'center',height:'100vh'}}>
                     <Oval
                         height={30}
@@ -114,9 +119,9 @@ function Midsec() {
                 </div>
              ):(
                 <>
-                {latestPost.map((data,index) =>{
-                    const item  = allpost?.find((val) => val.Owner == data.owner)
-                    const getMail = alluser?.find((val) => val._id == data.owner)
+                {latestPost?.map((data,index) => {
+                    const item  = allpost?.find((val) => val?.Owner == data?.owner)
+                    const getMail = alluser?.find((val) => val._id == data?.owner)
                     const email = getMail?.email.split('@')[0]
                     return <Tweets
                             img={item?.Avatar.url}

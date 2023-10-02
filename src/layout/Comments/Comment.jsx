@@ -82,11 +82,11 @@ function Comment(){
                                     <div className='flex flex-col items-center w-full'>
                                         <div className='flex flex-row w-full mb-1'>
                                             <div className='me-3 flex items-center' style={{flexBasis:"40px"}}>
-                                                <img src={`${location.state.img}`} className='rounded-full' style={{width:"48px",height:"40px"}} />
+                                                {(location.state.img) ? <img src={`${location.state.img}`} className='rounded-full' style={{width:"48px",height:"40px"}} />:<img src='https://ionicframework.com/docs/img/demos/avatar.svg'/>}
                                             </div>
                                             <div className='flex flex-col grow'>
                                                 <div>
-                                                    <span className='font-semibold' style={{fontSize:'15px',color:'#F7F9F9'}}>{location.state.name}</span>
+                                                    {(location.state.name)?<span className='font-semibold' style={{fontSize:'15px',color:'#F7F9F9'}}>{location.state.name}</span>:<span className='font-semibold'style={{fontSize:'15px',color:'#F7F9F9'}}>unknown</span>}
                                                 </div>
                                                 <div>
                                                     <span style={{fontSize:'15px',color:'#8B98A5'}}>@{location.state.mention}</span>

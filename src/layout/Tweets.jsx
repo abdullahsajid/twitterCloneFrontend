@@ -29,11 +29,11 @@ function Tweets({_id,img,name,mention,blog,userLike,userLikes,userComment}) {
   return(
         <div className="tweet-feed">
             <div className="tweet-feed-img" onClick={handleCommentComponent}>
-              <img src={img} alt={name} />
+              {img ? <img src={img} alt={name} /> : <img src={`https://ionicframework.com/docs/img/demos/avatar.svg`}/>}
             </div>
             <div className="feed-details" onClick={handleCommentComponent}>
               <div className="profile-details">
-                <p className="name">{name}</p>
+                {name ? <p className="name">{name}</p> : <p className="name">unknown</p>}
                 <p className="mention">@{mention}</p>
               </div>
               <div className="tweet-blog">

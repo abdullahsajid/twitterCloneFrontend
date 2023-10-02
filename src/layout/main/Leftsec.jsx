@@ -152,20 +152,20 @@ function Leftsec({edit}) {
             ):(
               <>
             <div className="pro-img">
-              {profileData && (<img
+              {profileData ? (<img
                 src={`${(profileData.details) ? profileData.details.Avatar.url : "https://ionicframework.com/docs/img/demos/avatar.svg"}`}
-              />)}
+              />):(<img src={`https://ionicframework.com/docs/img/demos/avatar.svg`} />)}
             </div>
             <div className="pro-name">
-              {profileData && (<p className="username">{`${(profileData.details) ? profileData.details.userName : "unknown"}`}</p>)}
-              {profileData && (
+              {profileData ? (<p className="username">{`${(profileData.details) ? profileData.details.userName : "unknown"}`}</p>):(<p className='username'>unknown</p>)}
+              {user ? (
                 <>
                   {(()  => {
                     const getEmail = user.email?.split('@')[0];
                     return <p className="id">{`@${getEmail}`}</p>;
                   })()}
                 </>
-              )}
+              ):(<p className="id">@unknown</p>)}
             </div>
             <div className="pro-dot">
               <svg
@@ -186,15 +186,6 @@ function Leftsec({edit}) {
           </div>
         </div>
       </div>
-      {/* <Routes>
-        <Route path='/' element={<><Midsec /> <Rightsec /></>} />
-        <Route path='/explore' element={<><Explore /> <ExploreRight /></>} />
-        <Route path='/communities' element={<><Communities /> <Rightsec /></>} />
-        <Route path='/notification' element={<><Notification /> <Rightsec /></>} />
-        <Route path='/message' element={<><Message /> <MessageDetails /></>} />
-        <Route path='/bookmark' element={<><Bookmark /> <Rightsec /></>} />
-        <Route path='/profile' element={<><Profile /><Leftprofile /></>} />
-      </Routes> */}
     </>
   );
 }
