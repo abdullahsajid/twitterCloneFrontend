@@ -518,15 +518,13 @@ body{
 .retweet:hover p{
     color: rgb(0, 186, 124);
 }
-.likes-count{
-    animation: likes .6s;
-}
-.activeLike:hover svg{
+
+.activeLike svg{
     fill: rgb(249, 24, 128);
     background-color: rgba(249, 24, 128, 0.1);
     transition: background-color 0.4s;
 }
-.activeLike:hover p{
+.activeLike p{
     color: rgb(249, 24, 128);
 }
 .back-btn:hover{

@@ -5,6 +5,7 @@ import { useDispatch,useSelector } from 'react-redux'
 import CommentOnTweet from './CommentOnTweet'
 import toast from 'react-hot-toast'
 
+
 function Comment(){
     const[addComment,setAddComment] = useState('')
     const dispatch = useDispatch()
@@ -26,6 +27,15 @@ function Comment(){
     const handleComment = async (e) => {
         e.preventDefault()
         try{
+            if(addComment === ''){
+                return toast.error(`Nothing there!`,{
+                    style: {
+                      borderRadius: '10px',
+                      border: "1px solid #38444D",
+                      background: '#15202B',
+                      color: '#fff',
+                  }})
+            }
             const _id = location.state._id
             const comment = addComment
             dispatch(postComment({_id,comment}))

@@ -16,7 +16,7 @@ function Midsec() {
         e.preventDefault()
         try{
             if(tweetTxt === ''){
-                return toast.error("Nothing there! ",{
+                return toast.error("Nothing there!",{
                     style: {
                         borderRadius: '10px',
                         border: "1px solid #38444D",
@@ -132,6 +132,7 @@ function Midsec() {
                             userLike={data?.likes.length}
                             userLikes={data?.likes}
                             userComment={data?.comments}
+                            user_id={userData?._id}
                             />
                 })}
                 </>

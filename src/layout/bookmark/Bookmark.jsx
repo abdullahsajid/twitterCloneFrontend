@@ -37,9 +37,13 @@ function Bookmark() {
                                 img={bookmarkProfile?.Avatar.url}
                                 name={bookmarkProfile?.userName}
                                 mention={email}
-                                blog={data.caption}
-                                userLike={data.likes.length}
-                                userComment={data.comments} />
+                                blog={data?.caption}
+                                userLike={data?.likes.length}
+                                userComment={data?.comments}
+                                userLikes={data?.likes}
+                                user_id={userData?._id}
+                                 />
+                                
             })}
         </div>
     );

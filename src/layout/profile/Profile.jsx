@@ -96,6 +96,7 @@ function Profile({setEdit,edit}) {
                                 userLike={data?.likes.length}
                                 userLikes={data?.likes}
                                 userComment={data?.comments}
+                                user_id={userData?._id}
                             />
                 })}
             </div>
