@@ -9,10 +9,18 @@ const LoginMain = ({show}) => {
   const navigate = useNavigate()
   const[email,setEmail] = useState('')
   const[password,setPassword] = useState('')
+  const[emailError,setEmailError] = useState('')
+  const[passwordError,setPasswordError] = useState('')
   const dispatch = useDispatch()
 
   const handleChecker = async (e) => {
     e.preventDefault()
+    if(emailError || passwordError){
+      return 
+    }
+    if(email === '' || password === ''){
+      return
+    }
     const res = await dispatch(loginUser({email,password}))
     if(res.payload && res.payload.token){
       toast.success("Login Successfully!",{ 
@@ -36,6 +44,25 @@ const LoginMain = ({show}) => {
     
   } 
   const {loading} = useSelector((state)=>state.userLogin)
+
+  const validateEmail = () => {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(!emailPattern.test(email)){
+      setEmailError("Invalid Email")
+    }else if(email === ''){
+      setEmailError('field is empty!')
+    }
+    else{
+      setEmailError('')
+    }
+  }
+  const ValidatePass = () => {
+    if((password == '') || (password.length < 5)){
+      return setPasswordError("invalid password")
+    }else{
+      setPasswordError('')
+    }
+  }
   return (
     <div className='fixed top-0 z-10'>
       <div className='flex justify-center items-center w-screen h-screen'>
@@ -59,11 +86,13 @@ const LoginMain = ({show}) => {
                 </div>
                 <div className='w-full mt-5'>
                   <label htmlFor="email">Email:</label>
-                  <input id='email' value={email} onChange={(e) => setEmail(e.target.value)} className='border border-slate-300 rounded-md px-1 py-2 w-full shadow-sm focus:outline-none mt-2' style={{background:"none"}} type="email" />
+                  <input id='email' value={email} onChange={(e) => setEmail(e.target.value)} onBlur={validateEmail} className='border border-slate-300 rounded-md px-1 py-2 w-full shadow-sm focus:outline-none mt-2' style={{background:"none"}} type="email" />
+                  <span>{emailError}</span>
                 </div>
                 <div className='w-full mt-5'>
                   <label htmlFor="pass">Password:</label>
-                  <input id='pass' value={password} onChange={(e) => setPassword(e.target.value)} className='border border-slate-300 rounded-md px-1 py-2 w-full shadow-sm focus:outline-none mt-2' style={{background:"none"}} type="password" />
+                  <input id='pass' value={password} onChange={(e) => setPassword(e.target.value)} onBlur={ValidatePass} className='border border-slate-300 rounded-md px-1 py-2 w-full shadow-sm focus:outline-none mt-2' style={{background:"none"}} type="password" />
+                  <span>{passwordError}</span>
                 </div>
                 <button onClick={handleChecker} className='flex justify-center items-center rounded-full cursor-pointer mt-7 bg-white' style={{width:"300px",maxWidth:"300px",minWidth:"36px",height:"40px",borderColor: "rgb(83, 100, 113)",border: ".5px solid"}}>
                     {loading ? <Oval

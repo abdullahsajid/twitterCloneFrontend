@@ -11,6 +11,9 @@ const Signup = ({show}) => {
   const[password,setPassword] = useState("")
   const[confirmPass,setConfirmPass] = useState('')
   const[register,setRegister] = useState(false)
+  const[emailError,setEmailError] = useState('')
+  const[passwordError,setPasswordError] = useState('')
+  const[confirmPassError,setConfirmPassError] = useState('')
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -47,6 +50,34 @@ const Signup = ({show}) => {
     }
   }
   const {loading} = useSelector((state) => state.registerUser)
+
+  const validateEmail = () => {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(!emailPattern.test(email)){
+      setEmailError("Invalid Email")
+    }else if(email === ''){
+      setEmailError('field is empty!')
+    }
+    else{
+      setEmailError('')
+    }
+  }
+  const ValidatePass = () => {
+    if((password == '') || (password.length < 5)){
+      return setPasswordError("invalid password")
+    }else{
+      setPasswordError('')
+    }
+  }
+  const validatePassword = () => {
+    if(password === confirmPass){
+      setConfirmPassError('')
+    }else if(confirmPass === ''){
+      setConfirmPassError('field is empty!')
+    }else{
+      setConfirmPassError('password not match!')
+    }
+  }
   return (
     <div className='fixed top-0 z-10'>
       <div className='flex justify-center items-center w-screen h-screen'>
@@ -77,7 +108,9 @@ const Signup = ({show}) => {
                   style={{background:"none"}} 
                   type="email"
                   required
+                  onBlur={validateEmail}
                    />
+                  <span>{emailError}</span>
                 </div>
                 <div className='w-full mt-5'>
                   <label htmlFor="pass">Password:</label>
@@ -88,7 +121,9 @@ const Signup = ({show}) => {
                    style={{background:"none"}} 
                    type="password"
                    required
+                   onBlur={ValidatePass}
                     />
+                  <span>{passwordError}</span>
                 </div>
                 <div className='w-full mt-5'>
                   <label htmlFor="pass">Confirm Password:</label>
@@ -99,7 +134,9 @@ const Signup = ({show}) => {
                    value={confirmPass}
                    onChange={(e) => setConfirmPass(e.target.value)}
                    required
+                   onBlur={validatePassword}
                   />
+                  <span>{confirmPassError}</span>
                 </div>
         
                 <button type='submit' onClick={handleSubmit} className='flex justify-center items-center rounded-full cursor-pointer mt-7 bg-white ' style={{width:"100%",maxWidth:"600px",minWidth:"36px",height:"40px",borderColor: "rgb(83, 100, 113)",border: ".5px solid"}}>
