@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { postLike,gettingTweets,postComment,bookmarkPost,getLatestPost} from '../../action/UserAction'
 import { useDispatch,useSelector } from 'react-redux'
@@ -66,8 +66,8 @@ function Comment(){
         }
     }
 
+    const ActiveLike = location.state.userLikes?.includes(location.state.user_id)
 
-    
   return (
     <div className='Mid'>
         <div className="navbar">
@@ -122,8 +122,9 @@ function Comment(){
                                                 </div>
 
                                                 <div className='flex' onClick={likesCount}>
-                                                    <div className='like cursor-pointer' style={{minHeight:'20px'}} >
+                                                    <div className={`${ActiveLike ? "activeLike like cursor-pointer":"like cursor-pointer"}`} style={{minHeight:'20px'}} >
                                                         <svg viewBox="0 0 24 24" aria-hidden="true" style={{width:"33px",height: "33px"}} className="r-4qtqp9 r-yyyyoo r-1xvli5t r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-1hdv0qi"><g><path d="M20.884 13.19c-1.351 2.48-4.001 5.12-8.379 7.67l-.503.3-.504-.3c-4.379-2.55-7.029-5.19-8.382-7.67-1.36-2.5-1.41-4.86-.514-6.67.887-1.79 2.647-2.91 4.601-3.01 1.651-.09 3.368.56 4.798 2.01 1.429-1.45 3.146-2.1 4.796-2.01 1.954.1 3.714 1.22 4.601 3.01.896 1.81.846 4.17-.514 6.67z"></path></g></svg>
+                                                        <p>{location.state.userLike}</p>
                                                     </div>
                                                 </div>
 
@@ -145,7 +146,7 @@ function Comment(){
                             <div className='px-4 pt-4 pb-4'>
                                 <div className='flex items-center'>
                                     <div className='me-3 flex items-center' style={{flexBasis:"40px"}}>
-                                        <img src={`${user.details?.Avatar.url}`} className='rounded-full' style={{width:"48px",height:"40px"}}/>
+                                        {(user.details.Avatar.url)?<img src={`${user.details?.Avatar.url}`} className='rounded-full' style={{width:"48px",height:"40px"}}/>:<img src='https://ionicframework.com/docs/img/demos/avatar.svg'className='rounded-full' style={{width:"48px",height:"40px"}}/>}
                                     </div>
                                     <div className='flex justify-between items-center grow'>
                                         <div className='shrink grow w-full'>

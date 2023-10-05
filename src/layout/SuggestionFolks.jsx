@@ -1,14 +1,16 @@
 import { useDispatch } from "react-redux";
 import { followUser,followOtherUser} from "../action/UserAction";
+import { useState } from "react";
 
-function SuggestionFolks({_id,img,name,tag}) {
+function SuggestionFolks({_id,img,name,tag,userId}) {
     const dispatch = useDispatch()
+    const [followOrUnfollow,setCondition] = useState(false)
     const mention = tag.split('@')[0]
     const followUnfollow = () => {
         dispatch(followUser({_id}))
-        dispatch(followOtherUser({_id}))
-        // alert(_id)  
+        dispatch(followOtherUser({_id}))  
     }
+    // let items = (userId == _id) ? setCondition(true) : setCondition(false)
     return (
         <>
         <div className="folksids">
@@ -29,3 +31,5 @@ function SuggestionFolks({_id,img,name,tag}) {
     );
 }
 export default SuggestionFolks;
+
+// {`${condition ? "UnFollow" : "Follow"}`}

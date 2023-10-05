@@ -364,3 +364,22 @@ export const getLatestPost = createAsyncThunk('getLatestPost/post', async () => 
         return err.message
     }
 })
+
+export const getRecommendedUser = createAsyncThunk('recommendedUser/Users',async () => {
+    try{
+        const token = cookie.get('token')
+        const {data} = await axios.get(`${REACT_APP_BASE_URL}/recommendedUser`,
+            {
+                headers:{
+                    "Content-Type":'application/json',
+                    Authorization: `Bearer ${token}`
+                },
+                credentials: "include",
+                withCredentials: true
+            }
+        )
+        return data
+    }catch(err){
+        return err.message
+    }
+})

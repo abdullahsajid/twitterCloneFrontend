@@ -1,16 +1,17 @@
 import SuggestionFolks from "../SuggestionFolks";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch} from "react-redux";
+import { useEffect,useState} from "react";
+import {getRecommendedUser} from '../../action/UserAction'
 function ExploreRight() {
+    const dispatch = useDispatch()
     const {alluser} = useSelector((state) => state.allUser.allUser)
     const {allProfile} = useSelector((state) => state.allUserProfile.allUserProfile)
-    let copyAllUser = alluser && [...alluser]
-    let copyUser = []
-    let allUserlength = alluser?.length
-    for(let i=0; i<3; i++){
-        let userIndex =  Math.floor(Math.random() * allUserlength)
-        alluser && copyUser.push(copyAllUser[userIndex]) 
-    }
-    
+   
+    useEffect(() => {
+        dispatch(getRecommendedUser())
+    },[dispatch])
+    const {recommendedUser} = useSelector((state) => state.recommendedUser.recommendedUser)
+    const userData = useSelector((state) => state.user.user)
     return (
         <div className="right">
             <div className="rightArea">
@@ -19,9 +20,17 @@ function ExploreRight() {
                         <p style={{ fontSize: "20px", fontWeight: "bold", marginBottom: ".5em" }}>Who to follow</p>
                     </div>
                     <div className="folksmain">
-                        {copyUser.map((data) => {
+                        {recommendedUser?.map((data) => {
                             let profileId = allProfile?.find((item) => item._id == data.profileDetails)
-                            return <SuggestionFolks _id={data._id} img={profileId?.Avatar.url} name={profileId?.userName} tag={data.email} />
+                            // let items = (userData?._id == data?._id) ? setCondition(true) : setCondition(false)
+                            
+                            return <SuggestionFolks
+                                        _id={data?._id} 
+                                        img={profileId?.Avatar.url} 
+                                        name={profileId?.userName} 
+                                        tag={data?.email}
+                                        userId={userData?._id}
+                                    />
                         })}
                     </div>
                 </div>

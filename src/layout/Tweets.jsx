@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {postLike,gettingTweets,getAllPost,getAllUser} from '../action/UserAction'
+import {postLike,gettingTweets,getAllPost,getAllUser,getLatestPost} from '../action/UserAction'
 import { useNavigate } from "react-router-dom";
 function Tweets({_id,user_id,img,name,mention,blog,userLike,userLikes,userComment}) {
   const naviagtion = useNavigate()
@@ -14,6 +14,7 @@ function Tweets({_id,user_id,img,name,mention,blog,userLike,userLikes,userCommen
     setlikes(likes+1)
     dispatch(postLike(_id))    
     dispatch(gettingTweets())
+    dispatch(getLatestPost())
   }
 
   function likeactive(){
@@ -21,7 +22,7 @@ function Tweets({_id,user_id,img,name,mention,blog,userLike,userLikes,userCommen
   }
 
   const handleCommentComponent = () => {
-    naviagtion('/comments',{state:{_id,img,name,mention,blog,userLike,userComment}})
+    naviagtion('/comments',{state:{_id,user_id,img,name,mention,blog,userLike,userLikes,userComment}})
     dispatch(getAllPost())
     dispatch(getAllUser())
   }
@@ -65,13 +66,11 @@ function Tweets({_id,user_id,img,name,mention,blog,userLike,userLikes,userCommen
                   <p>7</p>
                 </div>
                 <div className={`${ActiveLike ? "activeLike like": "like"}`} onClick={likesCount}>
-                <svg viewBox="0 0 24 24" aria-hidden="true"><g><path d="M20.884 13.19c-1.351 2.48-4.001 5.12-8.379 7.67l-.503.3-.504-.3c-4.379-2.55-7.029-5.19-8.382-7.67-1.36-2.5-1.41-4.86-.514-6.67.887-1.79 2.647-2.91 4.601-3.01 1.651-.09 3.368.56 4.798 2.01 1.429-1.45 3.146-2.1 4.796-2.01 1.954.1 3.714 1.22 4.601 3.01.896 1.81.846 4.17-.514 6.67z"></path></g></svg>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><g><path d="M20.884 13.19c-1.351 2.48-4.001 5.12-8.379 7.67l-.503.3-.504-.3c-4.379-2.55-7.029-5.19-8.382-7.67-1.36-2.5-1.41-4.86-.514-6.67.887-1.79 2.647-2.91 4.601-3.01 1.651-.09 3.368.56 4.798 2.01 1.429-1.45 3.146-2.1 4.796-2.01 1.954.1 3.714 1.22 4.601 3.01.896 1.81.846 4.17-.514 6.67z"></path></g></svg>
                   <p>{userLike}</p>
                 </div>
               </div>
       </div>
     );
 }
-export default Tweets; 
-
-
+export default Tweets;
