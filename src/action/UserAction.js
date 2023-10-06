@@ -68,6 +68,24 @@ export const postEditProfile = (name,bio,bannerImg,Avatar) => async (dispatch) =
     }
 }
 
+export const UpdateProfile = createAsyncThunk('updateProfile/profile', async ({name,bio,bannerImg,Avatar}) => {
+    try{
+        const token = cookie.get('token')
+        const {data} = await axios.put(`${REACT_APP_BASE_URL}/updateProfile`,{name,bio,bannerImg,Avatar},
+        {
+            headers:{
+                "Content-Type":'application/json',
+                Authorization: `Bearer ${token}`
+            },
+            credentials: "include",
+            withCredentials: true
+        }
+        )
+        return data
+    }catch(error){
+        return error
+    }
+})
 
 export const logoutUser = createAsyncThunk('userLogout/logout', async () => {
     try{

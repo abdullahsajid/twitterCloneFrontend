@@ -157,7 +157,7 @@ function Leftsec({edit}) {
               />):(<img src={`https://ionicframework.com/docs/img/demos/avatar.svg`} />)}
             </div>
             <div className="pro-name">
-              {profileData ? (<p className="username">{`${(profileData.details) ? profileData.details.userName : "unknown"}`}</p>):(<p className='username'>unknown</p>)}
+              {profileData ? (<p className={`${profileData.details.userName.length > 10 ? "usernamelongLength" : "username"}`}>{`${(profileData.details) ? profileData.details.userName : "unknown"}`}</p>):(<p className='username'>unknown</p>)}
               {user ? (
                 <>
                   {(()  => {
