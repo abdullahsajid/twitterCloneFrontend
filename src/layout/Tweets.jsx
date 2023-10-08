@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import {postLike,gettingTweets,getAllPost,getAllUser,getLatestPost,deletePost} from '../action/UserAction'
 import { useNavigate } from "react-router-dom";
 function Tweets({_id,user_id,img,name,mention,blog,userLike,userLikes,userComment}) {
@@ -8,7 +8,8 @@ function Tweets({_id,user_id,img,name,mention,blog,userLike,userLikes,userCommen
   const[toggleDelete,setDeletePost] = useState(false)
   const [likes,setlikes] = useState(175)
   const [active,setactve] = useState(false)
-
+  const userData = useSelector((state) => state.user.user)
+  
   function likesCount(e){
     e.preventDefault()
     likeactive()
@@ -36,6 +37,8 @@ function Tweets({_id,user_id,img,name,mention,blog,userLike,userLikes,userCommen
     setDeletePost(!toggleDelete)
     dispatch(gettingTweets())
   }
+  const verifyUser = userData?.posts.includes(_id)
+  
   return(
         <div className="tweet-feed">
             <div className="tweet-feed-img" onClick={handleCommentComponent}>
@@ -52,7 +55,7 @@ function Tweets({_id,user_id,img,name,mention,blog,userLike,userLikes,userCommen
                 </p>
               </div>
             </div>
-            {toggleDelete && <div className='delete-area' onClick={deletedPost}>Delete</div>}
+            {(toggleDelete && verifyUser)  && <div className='delete-area' onClick={deletedPost}>Delete</div>}
             <div className="pro-dot dot-dot" onClick={toggleDeleteHandler}>
                 <svg
                     viewBox="0 0 24 24"
