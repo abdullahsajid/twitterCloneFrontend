@@ -19,6 +19,7 @@ import followerUserReducer from '../reducer/follower'
 import getLatestPostReducer from '../reducer/latestPost'
 import recommendedUserReducer from '../reducer/recommendedUser'
 import updateProfileReducer from '../reducer/updateProfile'
+import deletedPostReducer from '../reducer/deletePost'
 
 export const store = configureStore({
     reducer:{
@@ -41,7 +42,8 @@ export const store = configureStore({
         followerUser:followerUserReducer,
         getLatestPost:getLatestPostReducer,
         recommendedUser:recommendedUserReducer,
-        updateProfile:updateProfileReducer
+        updateProfile:updateProfileReducer,
+        deletedPost:deletedPostReducer
     },
     devTools:true  
 })

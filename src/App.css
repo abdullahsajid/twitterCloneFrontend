@@ -105,7 +105,22 @@ body{
     align-items: center;
     cursor: pointer;
 }
-
+.delete-area{
+    content: '';
+    width: 30%;
+    height: 50px;
+    border: 1px solid #000;
+    position: absolute;
+    right: 0;
+    background-color: #15202B !important;
+    box-shadow: rgba(136, 153, 166, 0.2) 0px 0px 15px, rgba(136, 153, 166, 0.15) 0px 0px 3px 1px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin-top: 20px;
+}
 .pro-img img{
     width: 40px;
     height: 40px;

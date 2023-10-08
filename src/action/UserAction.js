@@ -401,3 +401,22 @@ export const getRecommendedUser = createAsyncThunk('recommendedUser/Users',async
         return err.message
     }
 })
+
+export const deletePost = createAsyncThunk('deletePost/post',async ({_id}) => {
+    try{
+        const token = cookie.get('token')
+        const {data} = await axios.delete(`${REACT_APP_BASE_URL}/deletePost/${_id}`,
+            {
+                headers:{
+                    "Content-Type":'application/json',
+                    Authorization: `Bearer ${token}`
+                },
+                credentials: "include",
+                withCredentials: true
+            }
+        )
+        return data
+    }catch(err){
+        return err.message
+    }
+})
