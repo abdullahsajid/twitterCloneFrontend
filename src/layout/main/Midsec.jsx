@@ -132,6 +132,7 @@ function Midsec() {
                             userLike={data?.likes.length}
                             userLikes={data?.likes}
                             userComment={data?.comments}
+                            postUser={data?.owner}
                             user_id={userData?._id}
                             />
                 })}

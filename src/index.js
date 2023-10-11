@@ -16,6 +16,7 @@ import RouteComment from './routes/RouteComment';
 import App from './App';
 import { Toaster } from 'react-hot-toast';
 import {disableReactDevTools} from '@fvilers/disable-react-devtools'
+import RouteViewProfile from './routes/RouteViewProfile';
 
 // if(process.env.NODE_ENV === 'production'){
 //   disableReactDevTools()
@@ -37,6 +38,7 @@ root.render(
             <Route path='/bookmark' element={<RouteBookmark/>} />
             <Route path='/profile/:id' element={<RouteProfile/>} />
             <Route path='/comments' element={<RouteComment/>}/>
+            <Route path='/ViewProfile' element={<RouteViewProfile/>}/>
           </Route>
           <Route path='/' element={<Home/>}/>
         </Routes> 

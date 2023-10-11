@@ -20,6 +20,7 @@ import getLatestPostReducer from '../reducer/latestPost'
 import recommendedUserReducer from '../reducer/recommendedUser'
 import updateProfileReducer from '../reducer/updateProfile'
 import deletedPostReducer from '../reducer/deletePost'
+import viewProfileReducer from '../reducer/viewProfile'
 
 export const store = configureStore({
     reducer:{
@@ -43,7 +44,8 @@ export const store = configureStore({
         getLatestPost:getLatestPostReducer,
         recommendedUser:recommendedUserReducer,
         updateProfile:updateProfileReducer,
-        deletedPost:deletedPostReducer
+        deletedPost:deletedPostReducer,
+        viewProfile:viewProfileReducer
     },
     devTools:true  
 })

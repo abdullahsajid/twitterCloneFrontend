@@ -324,6 +324,9 @@ body{
     padding-right: .5em;
     font-size: 13px;
 }
+.name:hover{
+    text-decoration: underline;
+}
 .mention{
     color: rgb(139, 152, 165) !important;
     font-size: 13px;

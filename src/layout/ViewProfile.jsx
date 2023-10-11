@@ -1,37 +1,27 @@
-import Tweets from '../Tweets';
-import {getDetail,gettingTweets,getProfile} from '../../action/UserAction'
+import Tweets from './Tweets';
+import {getDetail,gettingTweets,getProfile} from '../action/UserAction'
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import {useNavigate, useParams} from 'react-router-dom'
 
-function Profile({setEdit,edit}) {
+function ViewProfile() {
     const navigation = useNavigate()
-    const userData = useSelector((state) => state.user.user)
-    const user = useSelector((state) => state.profile.user)
-    const tweets = useSelector((state) => state.getTweet.user)
-    const param = useParams()
     const dispatch = useDispatch()
-   
-    const editProfile = () => {
-        setEdit(!edit)
-    }
+    const viewUser = useSelector((state) => state.viewProfile.viewUser.data)
     
     const handleBack = () => {
         navigation(-1)
     }
 
-    useEffect(() => {
-        dispatch(getProfile())
-        dispatch(getDetail(param.id))
-        dispatch(gettingTweets())
-    },[dispatch])
 
-    if(!userData.email){
+    if(!viewUser.user?.email){
         return null
     }
-    const getEmail = userData.email.split('@')[0]
+
+    const getEmail = viewUser.user.email?.split('@')[0]
+
     return (
-        <div className={`${edit ? 'Mid opacity-50':'Mid'}`}>
+        <div className={`Mid`}>
             <div className="explore" style={{ height: "100%", borderBottom: "1px solid #15202B" }}>
                 <div className="navbar">
                     <nav className="nav" style={{ justifyContent: "flex-start",height:'100%'}}>
@@ -40,40 +30,37 @@ function Profile({setEdit,edit}) {
                                 <g><path d="M7.414 13l5.043 5.04-1.414 1.42L3.586 12l7.457-7.46 1.414 1.42L7.414 11H21v2H7.414z"></path></g></svg>
                         </div>
                         <div style={{ margin: "0", padding: "0", marginLeft: "20px" }}>
-                            {user && (<p style={{ margin: "0", padding: "0", fontSize: "17px" }}>{(user.details) ? user.details.userName : "unknown"}</p>)}
-                            {tweets ? (<p style={{ margin: "0", padding: "0", fontSize: "12px", color: "#8B98A5" }}>{`${tweets.posted?.length} Tweets`}</p>):(<p style={{ margin: "0", padding: "0", fontSize: "12px", color: "#8B98A5" }}>0 Tweets</p>)}
+                            {viewUser && (<p style={{ margin: "0", padding: "0", fontSize: "17px" }}>{(viewUser.profile) ? viewUser.profile?.userName : "unknown"}</p>)}
+                            {viewUser ? (<p style={{ margin: "0", padding: "0", fontSize: "12px", color: "#8B98A5" }}>{`${viewUser.postArr?.length} Tweets`}</p>):(<p style={{ margin: "0", padding: "0", fontSize: "12px", color: "#8B98A5" }}>0 Tweets</p>)}
                         </div>
                     </nav>
                 </div>
                 <div>
                     <div>
-                        {user && (<img src={`${(user.details) ? user.details.bannerImg.url : "https://img.freepik.com/free-vector/abstract-business-professional-background-banner-design-multipurpose_1340-16856.jpg"}`} style={{ height: "199px", width: "548px",objectFit: "cover"}} />)}
+                        {viewUser && (<img src={`${(viewUser.profile) ? viewUser.profile.bannerImg.url : "https://img.freepik.com/free-vector/abstract-business-professional-background-banner-design-multipurpose_1340-16856.jpg"}`} style={{ height: "199px", width: "548px",objectFit: "cover"}} />)}
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <div style={{ position: "relative",width:"150px"}}>
-                            {user && (<img src={`${(user.details) ? user.details.Avatar.url : "https://ionicframework.com/docs/img/demos/avatar.svg"}`} className="profileimg" />)}
-                        </div>
-                        <div className='edit-btn' style={{ border: "1px solid #8B89A5", marginTop: ".5em", borderRadius: "1em", padding: ".3em 1em", marginRight: ".5em" }} onClick={editProfile}>
-                            <a href="#" style={{ textDecoration: "none" }}>Edit profile</a>
+                            {viewUser && (<img src={`${(viewUser.profile) ? viewUser.profile.Avatar.url : "https://ionicframework.com/docs/img/demos/avatar.svg"}`} className="profileimg" />)}
                         </div>
                     </div>
-                    <div style={{ marginTop: "3em", marginLeft: "1.5em", display: "flex", flexDirection: "column" }}>
-                        {user && (<span style={{ fontSize: "20px", fontWeight: "700" }}>{(user.details) ? user.details.userName : "unknown"}</span>)}
-                        {userData ? ( <span style={{ fontSize: "15px", color: "#8B98A5", marginTop: "-5px" }}>{`@${getEmail}`}</span>):(<span style={{ fontSize: "15px", color: "#8B98A5", marginTop: "-5px" }}>@gmail.com</span>)}
+                    <div style={{ marginTop: "5em", marginLeft: "1.5em", display: "flex", flexDirection: "column" }}>
+                        {viewUser && (<span style={{ fontSize: "20px", fontWeight: "700" }}>{(viewUser.profile) ? viewUser.profile?.userName : "unknown"}</span>)}
+                        {viewUser ? ( <span style={{ fontSize: "15px", color: "#8B98A5", marginTop: "-5px" }}>{`@${getEmail}`}</span>):(<span style={{ fontSize: "15px", color: "#8B98A5", marginTop: "-5px" }}>@gmail.com</span>)}
                     </div>
                     <div style={{ marginLeft: "1.5em", marginTop: ".7em" }}>
-                        {user && (<span style={{ fontWeight: "400" }}>{(user.details) ? user.details.bio : ""}</span>)}
+                        {viewUser && (<span style={{ fontWeight: "400" }}>{(viewUser.profile) ? viewUser.profile.bio : ""}</span>)}
                     </div>
                     <div style={{ marginTop: ".5em", marginLeft: "1.5em" }}>
                         <p style={{ color: "#8B98A5" }}>Joined Oct 2023</p>
                     </div>
                     <div style={{ display: "flex", marginTop: ".5em", marginLeft: "1.5em" }}>
                         <div style={{ marginRight: "1.5em" }}>
-                            {userData &&<span style={{ marginRight: ".3em", fontSize: "14px", fontWeight: "700" }}>{(userData) ? userData.following.length : '0'}</span>}
+                            {viewUser &&<span style={{ marginRight: ".3em", fontSize: "14px", fontWeight: "700" }}>{(viewUser) ? viewUser.user.following.length : '0'}</span>}
                             <span style={{ color: "#8B98A5", fontSize: "15px" }}>Following</span>
                         </div>
                         <div>
-                            {userData && <span style={{ marginRight: ".3em", fontSize: "14px", fontWeight: "700" }}>{(userData) ? userData.followers.length : '0'}</span>}
+                            {viewUser && <span style={{ marginRight: ".3em", fontSize: "14px", fontWeight: "700" }}>{(viewUser) ? viewUser.user.followers.length : '0'}</span>}
                             <span style={{ color: "#8B98A5", fontSize: "15px" }}>Followers</span>
                         </div>
                     </div>
@@ -86,10 +73,10 @@ function Profile({setEdit,edit}) {
                         </div>
                     </div>
                 </div>
-                {tweets?.posted.map((data,index) => {
+                {viewUser.postArr?.map((data,index) => {
                     return <Tweets key={index} 
-                                img={(user?.details) ? user.details?.Avatar.url : ''}
-                                name={(user?.details) ? user.details?.userName : ''}
+                                img={(viewUser?.profile) ? viewUser.profile?.Avatar.url : ''}
+                                name={(viewUser?.profile) ? viewUser.profile?.userName : ''}
                                 mention={getEmail}
                                 blog={data?.caption}
                                 _id={data?._id} 
@@ -97,11 +84,11 @@ function Profile({setEdit,edit}) {
                                 userLikes={data?.likes}
                                 userComment={data?.comments}
                                 postUser={data?.owner}
-                                user_id={userData?._id}
+                                user_id={viewUser.user?._id}
                             />
                 })}
             </div>
         </div>
     );
 }
-export default Profile;
+export default ViewProfile;

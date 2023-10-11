@@ -15,7 +15,8 @@ function Leftprofile({edit}) {
         dispatch(getRecommendedUser())
     },[dispatch])
     const {recommendedUser} = useSelector((state) => state.recommendedUser.recommendedUser)
-    
+
+
     return (
         <div className={`${edit ? 'right opacity-50' : 'right'}`}>
             <div className="search">

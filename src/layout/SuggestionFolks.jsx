@@ -1,9 +1,11 @@
 import { useDispatch } from "react-redux";
-import { followUser,followOtherUser} from "../action/UserAction";
+import { followUser,followOtherUser,ViewProfile} from "../action/UserAction";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function SuggestionFolks({_id,img,name,tag,userId}) {
     const dispatch = useDispatch()
+    const navigation = useNavigate()
     const [followOrUnfollow,setCondition] = useState(false)
     const mention = tag.split('@')[0]
     const followUnfollow = () => {
@@ -11,6 +13,10 @@ function SuggestionFolks({_id,img,name,tag,userId}) {
         dispatch(followOtherUser({_id}))  
     }
     // let items = (userId == _id) ? setCondition(true) : setCondition(false)
+    // const profileHandler = () => {
+    //     dispatch(ViewProfile({_id}))
+    //     navigation(`/ViewProfile`)
+    // }
     return (
         <>
         <div className="folksids">
@@ -19,7 +25,7 @@ function SuggestionFolks({_id,img,name,tag,userId}) {
                         <img src={img ? img : 'https://ionicframework.com/docs/img/demos/avatar.svg'}/>
                     </div>
                     <div style={{marginLeft:".8em"}}>
-                        <p>{name ? name : 'Unknown'}</p>
+                        <p className="name">{name ? name : 'Unknown'}</p>
                         <p style={{color:"#8898A5"}}>@{mention}</p>
                     </div>
             </div>
