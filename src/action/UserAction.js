@@ -424,7 +424,27 @@ export const deletePost = createAsyncThunk('deletePost/post',async ({_id}) => {
 export const ViewProfile = createAsyncThunk("viewProfile/profile", async ({_id}) => {
     try{
         const token = cookie.get('token')
-        const data = axios.get(`${REACT_APP_BASE_URL}/viewProfile/${_id}`,
+        const {data} = await axios.get(`${REACT_APP_BASE_URL}/viewProfile/${_id}`,
+            {
+                headers:{
+                    "Content-Type":'application/json',
+                    Authorization: `Bearer ${token}`
+                },
+                credentials: "include",
+                withCredentials: true
+            }
+        )
+        console.log(data)
+        return data
+    }catch(err){
+        return err.message
+    }
+})
+
+export const getComments = createAsyncThunk("getComments/comments", async (_id) => {
+    try{
+        const token = cookie.get('token')
+        const {data} = await axios.get(`${process.env.REACT_APP_BASE_URL}/getComment/${_id}`,
             {
                 headers:{
                     "Content-Type":'application/json',
@@ -436,6 +456,6 @@ export const ViewProfile = createAsyncThunk("viewProfile/profile", async ({_id})
         )
         return data
     }catch(err){
-        return err.message
+        return err
     }
 })

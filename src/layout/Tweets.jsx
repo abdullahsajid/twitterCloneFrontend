@@ -28,6 +28,7 @@ function Tweets({_id,user_id,img,name,mention,blog,userLike,userLikes,userCommen
     dispatch(getAllPost())
     dispatch(getAllUser())
   }
+  
   const ActiveLike = userLikes?.includes(user_id)
   const toggleDeleteHandler = () => {
     setDeletePost(!toggleDelete)
@@ -38,7 +39,7 @@ function Tweets({_id,user_id,img,name,mention,blog,userLike,userLikes,userCommen
     dispatch(gettingTweets())
   }
   const verifyUser = userData?.posts.includes(_id)
-
+  // const userr = useSelector((state) => state.viewProfile.viewUser.data)
   const profileHandler = () => {
     dispatch(ViewProfile({_id}))
     naviagtion(`/ViewProfile`)

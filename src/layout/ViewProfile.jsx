@@ -7,14 +7,14 @@ import {useNavigate, useParams} from 'react-router-dom'
 function ViewProfile() {
     const navigation = useNavigate()
     const dispatch = useDispatch()
-    const viewUser = useSelector((state) => state.viewProfile.viewUser.data)
+    const viewUser = useSelector((state) => state.viewProfile.viewUser)
     
     const handleBack = () => {
         navigation(-1)
     }
 
 
-    if(!viewUser.user?.email){
+    if(!viewUser?.user.email){
         return null
     }
 

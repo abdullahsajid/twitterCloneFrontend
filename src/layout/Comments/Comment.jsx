@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { postLike,gettingTweets,postComment,bookmarkPost,getLatestPost} from '../../action/UserAction'
+import { postLike,gettingTweets,postComment,bookmarkPost,getLatestPost,getComments} from '../../action/UserAction'
 import { useDispatch,useSelector } from 'react-redux'
 import CommentOnTweet from './CommentOnTweet'
 import toast from 'react-hot-toast'
@@ -8,12 +8,14 @@ import toast from 'react-hot-toast'
 
 function Comment(){
     const[addComment,setAddComment] = useState('')
+    const[gettingComments,setRetrieveComments] = useState()
     const dispatch = useDispatch()
     const navigation = useNavigate()
     const location = useLocation()
     const {allpost} = useSelector((state) => state.allPost.allPost)
     const {alluser} = useSelector((state) => state.allUser.allUser)
     const user = useSelector((state) => state.profile.user)
+
     const handleBack = () => {
         navigation(-1)
     }
@@ -24,6 +26,7 @@ function Comment(){
         dispatch(gettingTweets())
     }
 
+    
     const handleComment = async (e) => {
         e.preventDefault()
         try{
@@ -41,6 +44,10 @@ function Comment(){
             dispatch(postComment({_id,comment}))
             setAddComment('')
             dispatch(getLatestPost())
+
+            setTimeout(() => {
+                dispatch(getComments(location.state._id));
+              }, 1000);
         }catch(error){
             console.log(error)
         }
@@ -67,6 +74,13 @@ function Comment(){
     }
 
     const ActiveLike = location.state.userLikes?.includes(location.state.user_id)
+    
+    useEffect(()=>{
+        dispatch(getComments(location.state._id))
+    },[])
+
+    const comment = useSelector((state)=> state.Comment.Comment.post)
+
 
   return (
     <div className='Mid'>
@@ -146,7 +160,7 @@ function Comment(){
                             <div className='px-4 pt-4 pb-4'>
                                 <div className='flex items-center'>
                                     <div className='me-3 flex items-center' style={{flexBasis:"40px"}}>
-                                        {(user.details.Avatar.url)?<img src={`${user.details?.Avatar.url}`} className='rounded-full' style={{width:"48px",height:"40px"}}/>:<img src='https://ionicframework.com/docs/img/demos/avatar.svg'className='rounded-full' style={{width:"48px",height:"40px"}}/>}
+                                        {(user.details?.Avatar.url)?<img src={`${user.details?.Avatar.url}`} className='rounded-full' style={{width:"48px",height:"40px"}}/>:<img src='https://ionicframework.com/docs/img/demos/avatar.svg'className='rounded-full' style={{width:"48px",height:"40px"}}/>}
                                     </div>
                                     <div className='flex justify-between items-center grow'>
                                         <div className='shrink grow w-full'>
@@ -161,7 +175,7 @@ function Comment(){
                         </div>
                     </div>
                 </div>
-                {location.state.userComment?.map((item) => {
+                {comment?.comments.map((item) => {
                     const data  = allpost?.find((val) => val.Owner == item.user)
                     const getMail = alluser?.find((val) => val._id == item.user)
                     const email = getMail?.email.split('@')[0]

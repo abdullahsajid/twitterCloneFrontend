@@ -21,6 +21,7 @@ import recommendedUserReducer from '../reducer/recommendedUser'
 import updateProfileReducer from '../reducer/updateProfile'
 import deletedPostReducer from '../reducer/deletePost'
 import viewProfileReducer from '../reducer/viewProfile'
+import CommentReducer from '../reducer/getComments'
 
 export const store = configureStore({
     reducer:{
@@ -45,7 +46,8 @@ export const store = configureStore({
         recommendedUser:recommendedUserReducer,
         updateProfile:updateProfileReducer,
         deletedPost:deletedPostReducer,
-        viewProfile:viewProfileReducer
+        viewProfile:viewProfileReducer,
+        Comment:CommentReducer
     },
     devTools:true  
 })

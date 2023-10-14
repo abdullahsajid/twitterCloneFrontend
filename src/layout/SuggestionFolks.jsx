@@ -30,7 +30,7 @@ function SuggestionFolks({_id,img,name,tag,userId}) {
                     </div>
             </div>
                 <div className="folksbtn" onClick={followUnfollow}>
-                    <button className="left-tweet-btn" style={{color:'#000'}}>Follow</button>
+                    <button className="left-tweet-btn" style={{color:'#000',display:"block"}}>Follow</button>
                 </div>
         </div>
         </>

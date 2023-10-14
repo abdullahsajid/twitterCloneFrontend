@@ -107,7 +107,7 @@ const EditProfile = ({ setEdit, edit }) => {
     return (
         <div className='fixed top-0 z-10'>
             <form className='flex justify-center items-center w-screen h-screen'>
-                <div style={{ minHeight: "400px", maxWidth: "80vw", maxHeight: "90vh", height: "650px", minWidth: "600px", backgroundColor: "#15202B", borderRadius: "16px", overflow: "hidden", flexShrink: "1", border: "1px solid #fff" }}>
+                <div className='edit-profile'>
                     <div className='flex px-4 cursor-pointer' style={{ maxWidth: "600px", height: "53px", width: "100%" }}>
                         <div className='flex self-stretch items-start items-center shrink cursor-pointer' onClick={editProfile} style={{ minWidth: "56px", minHeight: "32px" }}>
                             <svg viewBox="0 0 24 24" aria-hidden="true" style={{ stroke: "rgb(239, 243, 244)", width: "20px", height: "20px" }}><g><path d="M10.59 12L4.54 5.96l1.42-1.42L12 10.59l6.04-6.05 1.42 1.42L13.41 12l6.05 6.04-1.42 1.42L12 13.41l-6.04 6.05-1.42-1.42L10.59 12z"></path></g></svg>
@@ -127,7 +127,7 @@ const EditProfile = ({ setEdit, edit }) => {
                     <div className='flex flex-col'>
                         <div className='flex flex-col justify-center overflow-hidden relative' style={{ minHeight: '200px',maxHeight: '200px',border:'1px solid #fff'}}>
                             <div className='w-full h-full relative'>
-                                <img src={bannerImg} style={{ maxWidth: '600px', overflow: 'hidden' }} />
+                                <img className='bannerImage' src={bannerImg} />
                             </div>
                             <div className='flex justify-center items-center w-full h-full absolute top-0'>
                                 <div className='flex flex-row justify-center items-center'>
@@ -147,7 +147,7 @@ const EditProfile = ({ setEdit, edit }) => {
                                 </div>
                             </div>
                         </div>
-                        <div className='flex flex-col justify-center relative' style={{ maxWidth: '8rem', marginTop: '-3rem', marginLeft: '1rem', borderRadius: '999px', width: '25%',height:'130px', border: "1px solid #000"}}>
+                        <div className='flex flex-col justify-center relative avatar-img'>
                             <div className='flex flex-col justify-center items-center absolute top-0 w-full h-full'>
                                 <div className='flex flex-row justify-center items-center'>
                                     <label htmlFor='avatarImg' className='flex justify-center items-center' style={{ backgroundColor: 'rgba(15, 20, 25, 0.75)', minWidth: '44px', minHeight: '44px', borderRadius: '999px' }}>

@@ -5,7 +5,7 @@ const CommentOnTweet = ({ comment, name, avatar, email }) => {
   return (
     <div className="tweet-feed">
       <div className="tweet-feed-img">
-        <img src={`${avatar}`} alt="" />
+        {avatar ? <img src={`${avatar}`} alt="" />:<img src='https://ionicframework.com/docs/img/demos/avatar.svg'/>}
       </div>
       <div className="feed-details">
         <div className="profile-details">

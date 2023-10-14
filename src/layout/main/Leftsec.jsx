@@ -138,7 +138,7 @@ function Leftsec({edit}) {
             </div>
           </div>
           {toggleLogout && <div className='logout-area' onClick={logout}>logout</div>}
-          <div className="profile" style={{maxWidth:"100%",width:"220px",height:"58px"}} onClick={handleChange}>
+          <div className="profile" onClick={handleChange}>
             {loading ? (
                <div style={{display:'flex',justifyContent:'center',alignItems:'center',height:'100vh'}}>
                 <Oval
