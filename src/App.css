@@ -763,4 +763,14 @@ body{
     .avatar-img{
         width: 100%;
     }
+    .h-screen{
+        height: 100%;
+    }
+    .signUp-box{
+        height: 100%;
+    }
+    .resp-pad{
+        padding-left: 2.5rem;
+        padding-right: 2.5rem;
+    }
 }

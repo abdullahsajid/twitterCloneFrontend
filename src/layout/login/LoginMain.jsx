@@ -64,9 +64,9 @@ const LoginMain = ({show}) => {
     }
   }
   return (
-    <div className='fixed top-0 z-10'>
+    <div className='fixed top-0 z-10 signUp-box'>
       <div className='flex justify-center items-center w-screen h-screen'>
-        <div style={{minHeight: "400px",maxWidth: "80vw",maxHeight: "90vh",height: "650px",minWidth: "600px",backgroundColor: "#15202B",borderRadius:"16px",overflow:"hidden",flexShrink:"1",border:"1px solid #fff"}}>
+        <div className='edit-profile'>
           <div className='flex px-4' style={{maxWidth:"600px",height:"53px",width:"100%"}}>
             <div onClick={show} className='flex basis-1/2 self-stretch items-start items-center shrink cursor-pointer' style={{minWidth:"56px",minHeight:"32px"}}>
                 <svg viewBox="0 0 24 24" aria-hidden="true" style={{stroke:"rgb(239, 243, 244)",width:"20px",height:"20px"}}><g><path d="M10.59 12L4.54 5.96l1.42-1.42L12 10.59l6.04-6.05 1.42 1.42L13.41 12l6.05 6.04-1.42 1.42L12 13.41l-6.04 6.05-1.42-1.42L10.59 12z"></path></g></svg>
