@@ -4,9 +4,10 @@ import { postLike,gettingTweets,postComment,bookmarkPost,getLatestPost,getCommen
 import { useDispatch,useSelector } from 'react-redux'
 import CommentOnTweet from './CommentOnTweet'
 import toast from 'react-hot-toast'
+import BottomNavbar from '../../BottomNavbar'
 
 
-function Comment(){
+function Comment({showNav}){
     const[addComment,setAddComment] = useState('')
     const[gettingComments,setRetrieveComments] = useState()
     const dispatch = useDispatch()
@@ -83,6 +84,7 @@ function Comment(){
 
 
   return (
+    <>
     <div className='Mid'>
         <div className="navbar">
             <nav className="nav" style={{ justifyContent: "flex-start",height:'100%'}}>
@@ -190,6 +192,8 @@ function Comment(){
             </div>
         </div>
     </div>
+    {showNav && <BottomNavbar/>}
+    </>
   )
 }
 

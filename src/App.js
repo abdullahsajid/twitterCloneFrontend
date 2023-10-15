@@ -17,7 +17,7 @@ function App() {
           dispatch(getDetail(`${userData._id}`))
         }
   },[dispatch,userData.profileDetails])
-
+  
       return (
     // container mx-auto
     <div className="">
@@ -28,4 +28,6 @@ function App() {
   );
 }
 
+
 export default App;
+

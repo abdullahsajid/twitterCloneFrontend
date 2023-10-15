@@ -1,17 +1,25 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState,useRef} from 'react';
 import '../../App.css';
 import Tweets from '../Tweets';
 import { Oval } from 'react-loader-spinner'
 import { useDispatch, useSelector } from 'react-redux';
 import {postTweet,getLatestPost,getAllPost,getAllUser} from '../../action/UserAction'
 import toast from 'react-hot-toast';
+import BottomNavbar from '../../BottomNavbar';
 
 function Midsec() {
     const dispatch = useDispatch()
+    let windowWidth = useRef(window.innerWidth)
+    const[showNav,setShowNav] = useState(windowWidth.current < 520)
     const[tweetTxt,setTweetTxt] = useState('')
     const userData = useSelector((state) => state.user.user)
     const profileData = useSelector((state) => state.profile.user)
-    
+
+    const handleResize = () => {
+        setShowNav(window.innerWidth < 520);
+    };
+
+   
     const handlerSubmit =  (e) => {
         e.preventDefault()
         try{
@@ -60,7 +68,15 @@ function Midsec() {
     const {allpost} = useSelector((state) => state.allPost.allPost)
     const {alluser} = useSelector((state) => state.allUser.allUser)
 
+    useEffect(() => {
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+    
     return (
+        <>
         <div className="Mid">
             <div className="navbar">
                 <nav className="nav">
@@ -138,7 +154,10 @@ function Midsec() {
                 })}
                 </>
             )}
+            
         </div>
+        {showNav && <BottomNavbar/>}
+        </>
     );
 }
 export default Midsec;

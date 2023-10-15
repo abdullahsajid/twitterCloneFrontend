@@ -1,7 +1,9 @@
 import notify from "../../data/notify.json";
-function Notification() {
+import BottomNavbar from '../../BottomNavbar'
 
+function Notification({showNav}) {
     return (
+        <>
         <div className="Mid">
             <div className="navbar" style={{ height: "100px " }}>
                 <nav className="navnoti">
@@ -41,6 +43,8 @@ function Notification() {
             })
             }
         </div>
+        {showNav && <BottomNavbar/>}
+        </>
     );
 }
 export default Notification;

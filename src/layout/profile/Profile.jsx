@@ -3,8 +3,9 @@ import {getDetail,gettingTweets,getProfile} from '../../action/UserAction'
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import {useNavigate, useParams} from 'react-router-dom'
+import BottomNavbar from '../../BottomNavbar';
 
-function Profile({setEdit,edit}) {
+function Profile({setEdit,edit,showNav}) {
     const navigation = useNavigate()
     const userData = useSelector((state) => state.user.user)
     const user = useSelector((state) => state.profile.user)
@@ -31,6 +32,7 @@ function Profile({setEdit,edit}) {
     }
     const getEmail = userData.email.split('@')[0]
     return (
+        <>
         <div className={`${edit ? 'Mid opacity-50':'Mid'}`}>
             <div className="explore" style={{ height: "100%", borderBottom: "1px solid #15202B" }}>
                 <div className="navbar">
@@ -102,6 +104,8 @@ function Profile({setEdit,edit}) {
                 })}
             </div>
         </div>
+        {showNav && <BottomNavbar/>}
+        </>
     );
 }
 export default Profile;

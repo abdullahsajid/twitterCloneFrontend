@@ -2,7 +2,8 @@ import { useEffect } from 'react';
 import Tweets from '../Tweets';
 import { useDispatch, useSelector } from 'react-redux';
 import {getBookmark,getAllPost,getAllUser} from '../../action/UserAction'
-function Bookmark() {
+import BottomNavbar from '../../BottomNavbar';
+function Bookmark({showNav}) {
     const dispatch = useDispatch()
     const userData = useSelector((state) => state.user.user)
     const getEmail = userData.email?.split('@')[0]
@@ -16,6 +17,7 @@ function Bookmark() {
     const {alluser}  = useSelector((state) => state.allUser.allUser)
     
     return (
+        <>
         <div className="Mid">
             <div className="navbar" style={{ height: "52px" }}>
                 <nav className="nav">
@@ -46,6 +48,8 @@ function Bookmark() {
                                 
             })}
         </div>
+        {showNav && <BottomNavbar/>}
+        </>
     );
 }
 export default Bookmark;
