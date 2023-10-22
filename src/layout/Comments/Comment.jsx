@@ -6,7 +6,6 @@ import CommentOnTweet from './CommentOnTweet'
 import toast from 'react-hot-toast'
 import BottomNavbar from '../../BottomNavbar'
 
-
 function Comment({showNav}){
     const[addComment,setAddComment] = useState('')
     const[gettingComments,setRetrieveComments] = useState()
@@ -23,8 +22,7 @@ function Comment({showNav}){
 
     function likesCount(e){
         e.preventDefault()
-        dispatch(postLike(location.state._id))    
-        dispatch(gettingTweets())
+        dispatch(postLike(location.state._id)) 
     }
 
     
@@ -80,8 +78,8 @@ function Comment({showNav}){
         dispatch(getComments(location.state._id))
     },[])
 
-    const comment = useSelector((state)=> state.Comment.Comment.post)
-
+    const post = useSelector((state)=> state.Comment.Comment.post)
+    
 
   return (
     <>
@@ -177,7 +175,7 @@ function Comment({showNav}){
                         </div>
                     </div>
                 </div>
-                {comment?.comments.map((item) => {
+                {post?.comments.map((item) => {
                     const data  = allpost?.find((val) => val.Owner == item.user)
                     const getMail = alluser?.find((val) => val._id == item.user)
                     const email = getMail?.email.split('@')[0]

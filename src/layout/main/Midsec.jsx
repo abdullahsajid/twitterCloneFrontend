@@ -123,38 +123,23 @@ function Midsec() {
                     </div>
                 </div>
             </form>
-            {loading ? (
-                <div style={{display:'flex',justifyContent:'center',alignItems:'center',height:'100vh'}}>
-                    <Oval
-                        height={30}
-                        width='100%'
-                        color="rgb(120, 86, 255)"
-                        secondaryColor="rgb(120, 86, 255)"
-                        strokeWidth={3}
-                    />
-                </div>
-             ):(
-                <>
                 {latestPost?.map((data,index) => {
                     const item  = allpost?.find((val) => val?.Owner == data?.owner)
                     const getMail = alluser?.find((val) => val._id == data?.owner)
                     const email = getMail?.email.split('@')[0]
                     return <Tweets
-                            img={item?.Avatar.url}
-                            name={item?.userName}
-                            mention={email}
-                            blog={data?.caption}
-                            _id={data?._id} 
-                            userLike={data?.likes.length}
-                            userLikes={data?.likes}
-                            userComment={data?.comments}
-                            postUser={data?.owner}
-                            user_id={userData?._id}
+                                img={item?.Avatar.url}
+                                name={item?.userName}
+                                mention={email}
+                                blog={data?.caption}
+                                _id={data?._id} 
+                                userLike={data?.likes.length}
+                                userLikes={data?.likes}
+                                userComment={data?.comments}
+                                postUser={data?.owner}
+                                user_id={userData?._id}
                             />
-                })}
-                </>
-            )}
-            
+                })}    
         </div>
         {showNav && <BottomNavbar/>}
         </>

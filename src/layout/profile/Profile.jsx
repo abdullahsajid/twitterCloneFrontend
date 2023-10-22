@@ -1,18 +1,20 @@
 import Tweets from '../Tweets';
 import {getDetail,gettingTweets,getProfile} from '../../action/UserAction'
-import { useEffect } from 'react';
+import { useEffect,useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import {useNavigate, useParams} from 'react-router-dom'
 import BottomNavbar from '../../BottomNavbar';
+
 
 function Profile({setEdit,edit,showNav}) {
     const navigation = useNavigate()
     const userData = useSelector((state) => state.user.user)
     const user = useSelector((state) => state.profile.user)
-    const tweets = useSelector((state) => state.getTweet.user)
+    const tweets = useSelector((state) => state.getTweet.getTweet)
     const param = useParams()
     const dispatch = useDispatch()
-   
+    
+
     const editProfile = () => {
         setEdit(!edit)
     }
@@ -21,16 +23,19 @@ function Profile({setEdit,edit,showNav}) {
         navigation(-1)
     }
 
+    
     useEffect(() => {
         dispatch(getProfile())
         dispatch(getDetail(param.id))
         dispatch(gettingTweets())
-    },[dispatch])
+    },[dispatch,navigation])
 
     if(!userData.email){
         return null
     }
     const getEmail = userData.email.split('@')[0]
+    // console.log(tweets)
+    
     return (
         <>
         <div className={`${edit ? 'Mid opacity-50':'Mid'}`}>
@@ -88,7 +93,7 @@ function Profile({setEdit,edit,showNav}) {
                         </div>
                     </div>
                 </div>
-                {tweets?.posted.map((data,index) => {
+                {tweets.posted?.map((data,index) => {
                     return <Tweets key={index} 
                                 img={(user?.details) ? user.details?.Avatar.url : ''}
                                 name={(user?.details) ? user.details?.userName : ''}

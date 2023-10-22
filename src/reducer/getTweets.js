@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
-    getTweet:{}
+    getTweet:[]
 }
 
 export const tweet = createSlice({
@@ -12,9 +12,9 @@ export const tweet = createSlice({
         },
         getTweetSuccess:(state,action)=>{
             state.loading = false
-            state.user = action.payload
+            state.getTweet = {...action.payload}
         },
-        getTweetFail:(state,action)=>{
+        getTweetFail:(state,action) => {
             state.loading = false
             state.error = action.payload
         }

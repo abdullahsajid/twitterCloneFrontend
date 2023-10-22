@@ -1,26 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch,useSelector } from "react-redux";
 import {postLike,gettingTweets,getAllPost,getAllUser,getLatestPost,deletePost,ViewProfile} from '../action/UserAction'
 import { useNavigate } from "react-router-dom";
+import {io}  from 'socket.io-client';
+const ENDPOINT = 'http://localhost:4000/'
+
 function Tweets({_id,user_id,img,name,mention,blog,userLike,userLikes,userComment,postUser}) {
+
   const naviagtion = useNavigate()
   const dispatch = useDispatch()
   const[toggleDelete,setDeletePost] = useState(false)
-  const [likes,setlikes] = useState(175)
-  const [active,setactve] = useState(false)
+  const [likes,setlikes] = useState(userLike)
+  const [ActiveLike, setActiveLike] = useState(userLikes?.includes(user_id));
   const userData = useSelector((state) => state.user.user)
-  
-  function likesCount(e){
-    e.preventDefault()
-    likeactive()
-    setlikes(likes+1)
-    dispatch(postLike(_id))    
-    dispatch(gettingTweets())
-    dispatch(getLatestPost())
-  }
-
-  function likeactive(){
-    setactve(current => !current)
+ 
+  function likesCount(){
+    dispatch(postLike(_id)) 
   }
 
   const handleCommentComponent = () => {
@@ -29,7 +24,6 @@ function Tweets({_id,user_id,img,name,mention,blog,userLike,userLikes,userCommen
     dispatch(getAllUser())
   }
   
-  const ActiveLike = userLikes?.includes(user_id)
   const toggleDeleteHandler = () => {
     setDeletePost(!toggleDelete)
   }
@@ -44,6 +38,26 @@ function Tweets({_id,user_id,img,name,mention,blog,userLike,userLikes,userCommen
     dispatch(ViewProfile({_id}))
     naviagtion(`/ViewProfile`)
   }
+
+  useEffect(()=>{
+    setlikes(userLike)
+  },[userLike])
+
+  useEffect(() => {
+    setActiveLike(userLikes?.includes(user_id));
+  }, [userLikes, user_id]);
+
+  useEffect(() => {   
+    const socket = io(ENDPOINT, {transports: ["websocket","polling"]})  
+    socket.on(`like:${_id}`,({data,condition})=>{
+      setlikes(data)
+      setActiveLike(condition);
+    })
+    return () => {
+      socket.off(`like:${_id}`)
+    }
+  },[])
+  
   
   return(
         <div className="tweet-feed">
@@ -86,9 +100,9 @@ function Tweets({_id,user_id,img,name,mention,blog,userLike,userLikes,userCommen
                 </div>
                 <div className={`${ActiveLike ? "activeLike like": "like"}`} onClick={likesCount}>
                   <svg viewBox="0 0 24 24" aria-hidden="true"><g><path d="M20.884 13.19c-1.351 2.48-4.001 5.12-8.379 7.67l-.503.3-.504-.3c-4.379-2.55-7.029-5.19-8.382-7.67-1.36-2.5-1.41-4.86-.514-6.67.887-1.79 2.647-2.91 4.601-3.01 1.651-.09 3.368.56 4.798 2.01 1.429-1.45 3.146-2.1 4.796-2.01 1.954.1 3.714 1.22 4.601 3.01.896 1.81.846 4.17-.514 6.67z"></path></g></svg>
-                  <p>{userLike}</p>
+                  <p>{likes}</p>
                 </div>
-              </div>
+            </div>
       </div>
     );
 }
