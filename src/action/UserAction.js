@@ -459,3 +459,13 @@ export const getComments = createAsyncThunk("getComments/comments", async (_id) 
         return err
     }
 })
+
+
+export const setSocket = createAsyncThunk('setSocket/socket', async (socket) => {
+    try{
+        const data = await socket
+        return data
+    }catch(err){
+        return err
+    }
+})

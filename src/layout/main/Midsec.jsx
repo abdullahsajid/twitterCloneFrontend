@@ -7,7 +7,7 @@ import {postTweet,getLatestPost,getAllPost,getAllUser} from '../../action/UserAc
 import toast from 'react-hot-toast';
 import BottomNavbar from '../../BottomNavbar';
 
-function Midsec() {
+function Midsec({socket}) {
     const dispatch = useDispatch()
     let windowWidth = useRef(window.innerWidth)
     const[showNav,setShowNav] = useState(windowWidth.current < 520)
@@ -138,6 +138,7 @@ function Midsec() {
                                 userComment={data?.comments}
                                 postUser={data?.owner}
                                 user_id={userData?._id}
+                                socket={socket}
                             />
                 })}    
         </div>

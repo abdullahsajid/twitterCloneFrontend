@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { BrowserRouter,Route,Routes } from 'react-router-dom';
@@ -17,11 +17,12 @@ import App from './App';
 import { Toaster } from 'react-hot-toast';
 import {disableReactDevTools} from '@fvilers/disable-react-devtools'
 import RouteViewProfile from './routes/RouteViewProfile';
-
+import {io}  from 'socket.io-client';
+const ENDPOINT = 'http://localhost:4000/'
 // if(process.env.NODE_ENV === 'production'){
 //   disableReactDevTools()
 // }
-
+const socket = io(ENDPOINT, {transports: ["websocket","polling"]})
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -30,14 +31,14 @@ root.render(
       <BrowserRouter>
        <Routes>
           <Route element={<ProtectedRoutes/>}>
-            <Route path="/home" element={<App />} />
+            <Route path="/home" element={<App socket={socket}/>} />
             <Route path='/explore' element={<RouteExplore/>} />
             <Route path='/communities' element={<RouteCommunities/>} />
-            <Route path='/notification' element={<RouteNotification/>} />
+            <Route path='/notification' element={<RouteNotification socket={socket}/>} />
             <Route path='/message' element={<RouteMessage/>} />
             <Route path='/bookmark' element={<RouteBookmark/>} />
-            <Route path='/profile/:id' element={<RouteProfile/>} />
-            <Route path='/comments' element={<RouteComment/>}/>
+            <Route path='/profile/:id' element={<RouteProfile socket={socket}/>} />
+            <Route path='/comments' element={<RouteComment socket={socket}/>}/>
             <Route path='/ViewProfile' element={<RouteViewProfile/>}/>
           </Route>
           <Route path='/' element={<Home/>}/>

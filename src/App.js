@@ -4,11 +4,15 @@ import {useEffect } from 'react';
 import Midsec from './layout/main/Midsec';
 import Rightsec from './layout/main/Rightsec';
 import { useDispatch,useSelector } from 'react-redux';
-import { getProfile,getDetail,getAllProfile,getAllUser} from './action/UserAction';
+import { getProfile,getDetail,getAllProfile,getAllUser,setSocket} from './action/UserAction';
 
-function App() {
+
+
+function App({socket}) {
   const dispatch = useDispatch()
   const userData = useSelector((state) => state.user.user)
+  const profileData = useSelector((state) => state.profile.user)
+  
 
   useEffect(() => {
         dispatch(getProfile())
@@ -17,13 +21,18 @@ function App() {
         if(userData.profileDetails){
           dispatch(getDetail(`${userData._id}`))
         }     
-  },[dispatch,userData.profileDetails])
 
-      return (
+        if(profileData?.details){
+          socket?.emit('addUser',profileData.details?.userName)
+        }
+        
+  },[dispatch,userData.profileDetails])
+  
+  return (
     // container mx-auto
     <div className="">
       <div className='sub-container'>
-        <Leftsec/><Midsec/><Rightsec/>
+        <Leftsec/><Midsec socket={socket}/><Rightsec/>
       </div>
     </div>
   );

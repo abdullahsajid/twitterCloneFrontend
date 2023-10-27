@@ -22,6 +22,7 @@ import updateProfileReducer from '../reducer/updateProfile'
 import deletedPostReducer from '../reducer/deletePost'
 import viewProfileReducer from '../reducer/viewProfile'
 import CommentReducer from '../reducer/getComments'
+// import socketReducer from '../reducer/sockets'
 
 export const store = configureStore({
     reducer:{
@@ -47,9 +48,15 @@ export const store = configureStore({
         updateProfile:updateProfileReducer,
         deletedPost:deletedPostReducer,
         viewProfile:viewProfileReducer,
-        Comment:CommentReducer
+        Comment:CommentReducer,
+        // socket:socketReducer
     },
-    devTools:true  
+    devTools:true,
+    // middleware:(getDefaultMiddleware)=>{
+    //     getDefaultMiddleware({
+    //         serializableCheck: false,
+    //     })
+    // }  
 })
 
 

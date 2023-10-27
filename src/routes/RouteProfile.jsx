@@ -5,7 +5,7 @@ import Leftprofile from '../layout/profile/Leftprofile'
 import EditProfile from '../layout/profile/EditProfile'
 import Comments from '../layout/Comments/Comment'
 
-const RouteProfile = () => {
+const RouteProfile = ({socket}) => {
   const[edit,setEdit] = useState(false)
   const[showCommentsCompon,setCompon] = useState(false)
 
@@ -27,7 +27,7 @@ const RouteProfile = () => {
             {edit && <EditProfile setEdit={setEdit} edit={edit}/>}
             <Leftsec edit={edit}/>
             {showCommentsCompon ? <Comments/> :
-              <Profile showNav={showNav} setEdit={setEdit} edit={edit} compon={showCommentsCompon} setCompon={setCompon}/>} 
+              <Profile showNav={showNav} setEdit={setEdit} edit={edit} compon={showCommentsCompon} setCompon={setCompon} socket={socket}/>} 
             <Leftprofile edit={edit}/>
         </div>
     </div>

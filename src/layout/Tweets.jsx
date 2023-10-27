@@ -2,24 +2,31 @@ import { useEffect, useState } from "react";
 import { useDispatch,useSelector } from "react-redux";
 import {postLike,gettingTweets,getAllPost,getAllUser,getLatestPost,deletePost,ViewProfile} from '../action/UserAction'
 import { useNavigate } from "react-router-dom";
-import {io}  from 'socket.io-client';
-const ENDPOINT = 'http://localhost:4000/'
 
-function Tweets({_id,user_id,img,name,mention,blog,userLike,userLikes,userComment,postUser}) {
 
-  const naviagtion = useNavigate()
+function Tweets({_id,user_id,img,name,mention,blog,userLike,userLikes,userComment,postUser,socket}) {
+
+  const navigation = useNavigate()
   const dispatch = useDispatch()
   const[toggleDelete,setDeletePost] = useState(false)
   const [likes,setlikes] = useState(userLike)
   const [ActiveLike, setActiveLike] = useState(userLikes?.includes(user_id));
   const userData = useSelector((state) => state.user.user)
- 
+  const profileData = useSelector((state) => state.profile.user)
+  // const socket = useSelector((state)=>state.socket.socket)
+
   function likesCount(){
+    let loginUserName = profileData.details?.userName
     dispatch(postLike(_id)) 
+    socket?.emit('like',user_id)
+    // socket?.emit("sendNotification",{receiverName:name,senderName:loginUserName})
+    // socket?.on("gottaNotification",(senderName)=>{
+    //   alert(senderName)
+    // })
   }
 
   const handleCommentComponent = () => {
-    naviagtion('/comments',{state:{_id,user_id,img,name,mention,blog,userLike,userLikes,userComment}})
+    navigation('/comments',{state:{_id,user_id,img,name,mention,blog,userLike,userLikes,userComment}})
     dispatch(getAllPost())
     dispatch(getAllUser())
   }
@@ -36,27 +43,27 @@ function Tweets({_id,user_id,img,name,mention,blog,userLike,userLikes,userCommen
   // const userr = useSelector((state) => state.viewProfile.viewUser.data)
   const profileHandler = () => {
     dispatch(ViewProfile({_id}))
-    naviagtion(`/ViewProfile`)
+    navigation(`/ViewProfile`)
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     setlikes(userLike)
   },[userLike])
 
   useEffect(() => {
     setActiveLike(userLikes?.includes(user_id));
-  }, [userLikes, user_id]);
+  },[userLikes, user_id])
 
-  useEffect(() => {   
-    const socket = io(ENDPOINT, {transports: ["websocket","polling"]})  
-    socket.on(`like:${_id}`,({data,condition})=>{
+  useEffect(() => {    
+    socket?.on(`like:${_id}`,({data,condition})=>{
       setlikes(data)
-      setActiveLike(condition);
+      setActiveLike(condition)
     })
+    
     return () => {
-      socket.off(`like:${_id}`)
+      socket?.off(`like:${_id}`)
     }
-  },[])
+  },[socket])
   
   
   return(

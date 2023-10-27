@@ -6,15 +6,18 @@ import CommentOnTweet from './CommentOnTweet'
 import toast from 'react-hot-toast'
 import BottomNavbar from '../../BottomNavbar'
 
-function Comment({showNav}){
+
+function Comment({showNav,socket}){
     const[addComment,setAddComment] = useState('')
-    const[gettingComments,setRetrieveComments] = useState()
+    // const[gettingComments,setRetrieveComments] = useState()
     const dispatch = useDispatch()
     const navigation = useNavigate()
     const location = useLocation()
     const {allpost} = useSelector((state) => state.allPost.allPost)
     const {alluser} = useSelector((state) => state.allUser.allUser)
     const user = useSelector((state) => state.profile.user)
+    const [likes,setlikes] = useState(location.state.userLike)
+    const [ActiveLike, setActiveLike] = useState(location.state.userLikes?.includes(location.state.user_id));
 
     const handleBack = () => {
         navigation(-1)
@@ -72,7 +75,7 @@ function Comment({showNav}){
         }
     }
 
-    const ActiveLike = location.state.userLikes?.includes(location.state.user_id)
+    // const ActiveLike = location.state.userLikes?.includes(location.state.user_id)
     
     useEffect(()=>{
         dispatch(getComments(location.state._id))
@@ -80,6 +83,23 @@ function Comment({showNav}){
 
     const post = useSelector((state)=> state.Comment.Comment.post)
     
+    useEffect(() => {
+        setlikes(location.state.userLike)
+      },[location.state.userLike])
+    
+      useEffect(() => {
+        setActiveLike(location.state.userLikes?.includes(location.state.user_id));
+      }, [location.state.userLikes, location.state.user_id]);
+    
+      useEffect(() => {   
+        socket?.on(`like:${location.state._id}`,({data,condition})=>{
+          setlikes(data)
+          setActiveLike(condition)
+        })
+        return () => {
+            socket?.off(`like:${location.state._id}`)
+        }
+      },[])
 
   return (
     <>
@@ -125,7 +145,7 @@ function Comment({showNav}){
                                             <div className='my-3'>
                                                 <div className='flex flex-wrap'>
                                                     <div style={{borderTop:'1px solid rgb(56, 68, 77)',height:'1px',width:'100%'}}></div>
-                                                    <span className='py-3' style={{fontSize:'15px'}}>{`${location.state.userLike} Likes`}</span>
+                                                    <span className='py-3' style={{fontSize:'15px'}}>{`${likes} Likes`}</span>
                                                 </div>
                                             </div>
                                             <div style={{height:'48px',minHeight:'1.875rem',borderTop:'1px solid rgb(56, 68, 77)',borderBottom:'1px solid rgb(56, 68, 77)',width:'100%',paddingTop:'0'}} className='flex justify-around items-center feed-links'>
@@ -138,7 +158,7 @@ function Comment({showNav}){
                                                 <div className='flex' onClick={likesCount}>
                                                     <div className={`${ActiveLike ? "activeLike like cursor-pointer":"like cursor-pointer"}`} style={{minHeight:'20px'}} >
                                                         <svg viewBox="0 0 24 24" aria-hidden="true" style={{width:"33px",height: "33px"}} className="r-4qtqp9 r-yyyyoo r-1xvli5t r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-1hdv0qi"><g><path d="M20.884 13.19c-1.351 2.48-4.001 5.12-8.379 7.67l-.503.3-.504-.3c-4.379-2.55-7.029-5.19-8.382-7.67-1.36-2.5-1.41-4.86-.514-6.67.887-1.79 2.647-2.91 4.601-3.01 1.651-.09 3.368.56 4.798 2.01 1.429-1.45 3.146-2.1 4.796-2.01 1.954.1 3.714 1.22 4.601 3.01.896 1.81.846 4.17-.514 6.67z"></path></g></svg>
-                                                        <p>{location.state.userLike}</p>
+                                                        <p>{likes}</p>
                                                     </div>
                                                 </div>
 

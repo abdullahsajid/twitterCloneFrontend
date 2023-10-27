@@ -2,7 +2,7 @@ import Leftsec from '../layout/main/Leftsec'
 import Notification from '../layout/notification/Notification'
 import Rightsec from '../layout/main/Rightsec'
 import { useEffect, useRef, useState } from 'react'
-const RouteNotification = () => {
+const RouteNotification = ({socket}) => {
 
   let windowWidth = useRef(window.innerWidth)
   const[showNav,setShowNav] = useState(windowWidth.current < 520)
@@ -19,7 +19,7 @@ const RouteNotification = () => {
   return (
     <div>
         <div className='sub-container'>
-        <Leftsec/><Notification showNav={showNav}/><Rightsec/>
+        <Leftsec/><Notification showNav={showNav} socket={socket}/><Rightsec/>
         </div>
     </div>
   )

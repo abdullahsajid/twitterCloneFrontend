@@ -1,12 +1,9 @@
 import Tweets from './Tweets';
-import {getDetail,gettingTweets,getProfile} from '../action/UserAction'
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux'
-import {useNavigate, useParams} from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import {useNavigate} from 'react-router-dom'
 
 function ViewProfile() {
     const navigation = useNavigate()
-    const dispatch = useDispatch()
     const viewUser = useSelector((state) => state.viewProfile.viewUser)
     
     const handleBack = () => {
@@ -14,7 +11,7 @@ function ViewProfile() {
     }
 
 
-    if(!viewUser?.user.email){
+    if(!viewUser.user?.email){
         return null
     }
 

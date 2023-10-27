@@ -1,7 +1,19 @@
 import notify from "../../data/notify.json";
 import BottomNavbar from '../../BottomNavbar'
+import { useEffect, useState } from "react";
+import {io}  from 'socket.io-client';
+const ENDPOINT = 'http://localhost:4000/'
 
 function Notification({showNav}) {
+    // const[notification,setNotification] = useState([])
+    // useEffect(()=>{
+    //     const socket = io(ENDPOINT, {transports: ["websocket","polling"]})
+    //     socket?.on("gottaNotification",(data)=>{
+    //         setNotification((prev) => [...prev,data])
+    //         alert(data)
+    //     })
+    // },[])
+    // console.log(notification)
     return (
         <>
         <div className="Mid">

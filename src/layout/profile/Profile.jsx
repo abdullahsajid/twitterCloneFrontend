@@ -1,12 +1,12 @@
 import Tweets from '../Tweets';
 import {getDetail,gettingTweets,getProfile} from '../../action/UserAction'
-import { useEffect,useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import {useNavigate, useParams} from 'react-router-dom'
 import BottomNavbar from '../../BottomNavbar';
 
 
-function Profile({setEdit,edit,showNav}) {
+function Profile({setEdit,edit,showNav,socket}) {
     const navigation = useNavigate()
     const userData = useSelector((state) => state.user.user)
     const user = useSelector((state) => state.profile.user)
@@ -30,11 +30,13 @@ function Profile({setEdit,edit,showNav}) {
         dispatch(gettingTweets())
     },[dispatch,navigation])
 
+
     if(!userData.email){
         return null
     }
     const getEmail = userData.email.split('@')[0]
     // console.log(tweets)
+    
     
     return (
         <>
@@ -105,6 +107,7 @@ function Profile({setEdit,edit,showNav}) {
                                 userComment={data?.comments}
                                 postUser={data?.owner}
                                 user_id={userData?._id}
+                                socket={socket}
                             />
                 })}
             </div>

@@ -7,6 +7,7 @@ import { Oval } from 'react-loader-spinner'
 import Cookies from 'universal-cookie';
 import toast,{ Toaster } from 'react-hot-toast';
 
+
 const cookie = new Cookies()
 function Leftsec({edit}) {
   const navigate = useNavigate()
@@ -55,6 +56,8 @@ function Leftsec({edit}) {
   //   console.log(getEmail)
   // }
   // userEmail()
+  
+  
   
   return (
     <>
