@@ -4,7 +4,7 @@ import Bookmark from '../layout/bookmark/Bookmark'
 import Rightsec from '../layout/main/Rightsec'
 import { useEffect, useRef, useState } from 'react'
 
-const RouteBookmark = () => {
+const RouteBookmark = ({notification}) => {
 
   let windowWidth = useRef(window.innerWidth)
   const[showNav,setShowNav] = useState(windowWidth.current < 520)
@@ -21,7 +21,7 @@ const RouteBookmark = () => {
   return (
     <div>
         <div className='sub-container'>
-            <Leftsec/><Bookmark showNav={showNav}/><Rightsec/>
+            <Leftsec notification={notification}/><Bookmark showNav={showNav}/><Rightsec/>
         </div>
     </div>
   )

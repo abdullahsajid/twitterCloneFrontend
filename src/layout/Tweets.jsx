@@ -4,7 +4,7 @@ import {postLike,gettingTweets,getAllPost,getAllUser,getLatestPost,deletePost,Vi
 import { useNavigate } from "react-router-dom";
 
 
-function Tweets({_id,user_id,img,name,mention,blog,userLike,userLikes,userComment,postUser,socket}) {
+function Tweets({_id,user_id,img,name,mention,blog,userLike,userLikes,userComment,postUser,socket,userImg}) {
 
   const navigation = useNavigate()
   const dispatch = useDispatch()
@@ -15,18 +15,23 @@ function Tweets({_id,user_id,img,name,mention,blog,userLike,userLikes,userCommen
   const profileData = useSelector((state) => state.profile.user)
   // const socket = useSelector((state)=>state.socket.socket)
 
-  function likesCount(){
-    let loginUserName = profileData.details?.userName
-    dispatch(postLike(_id)) 
-    socket?.emit('like',user_id)
-    // socket?.emit("sendNotification",{receiverName:name,senderName:loginUserName})
-    // socket?.on("gottaNotification",(senderName)=>{
-    //   alert(senderName)
-    // })
+  const likesCount = async (e) => {
+    e.preventDefault()
+    try{
+      let loginUserName = profileData.details?.userName
+      const likeData = await dispatch(postLike(_id)) 
+      socket?.emit('like',user_id)
+      if(likeData.payload.message == "post like!"){
+        socket?.emit("sendNotification",{receiverName:name,senderName:loginUserName,img:userImg,type:1})
+      }
+    }catch(error){
+      console.log(error)
+    }
+    
   }
 
   const handleCommentComponent = () => {
-    navigation('/comments',{state:{_id,user_id,img,name,mention,blog,userLike,userLikes,userComment}})
+    navigation('/comments',{state:{_id,user_id,img,name,mention,blog,userLike,userLikes,userComment,userImg}})
     dispatch(getAllPost())
     dispatch(getAllUser())
   }

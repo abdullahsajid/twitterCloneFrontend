@@ -8,7 +8,7 @@ import { getProfile,getDetail,getAllProfile,getAllUser,setSocket} from './action
 
 
 
-function App({socket}) {
+function App({socket,notification}) {
   const dispatch = useDispatch()
   const userData = useSelector((state) => state.user.user)
   const profileData = useSelector((state) => state.profile.user)
@@ -23,7 +23,10 @@ function App({socket}) {
         }     
 
         if(profileData?.details){
-          socket?.emit('addUser',profileData.details?.userName)
+          let userName = profileData.details?.userName
+          let id = profileData.details?.Owner
+          let avatar = profileData.details?.Avatar.url
+          socket?.emit('addUser',{id,userName,avatar})
         }
         
   },[dispatch,userData.profileDetails])
@@ -32,7 +35,7 @@ function App({socket}) {
     // container mx-auto
     <div className="">
       <div className='sub-container'>
-        <Leftsec/><Midsec socket={socket}/><Rightsec/>
+        <Leftsec notification={notification}/><Midsec socket={socket}/><Rightsec/>
       </div>
     </div>
   );

@@ -1,19 +1,9 @@
 import notify from "../../data/notify.json";
 import BottomNavbar from '../../BottomNavbar'
-import { useEffect, useState } from "react";
-import {io}  from 'socket.io-client';
-const ENDPOINT = 'http://localhost:4000/'
 
-function Notification({showNav}) {
-    // const[notification,setNotification] = useState([])
-    // useEffect(()=>{
-    //     const socket = io(ENDPOINT, {transports: ["websocket","polling"]})
-    //     socket?.on("gottaNotification",(data)=>{
-    //         setNotification((prev) => [...prev,data])
-    //         alert(data)
-    //     })
-    // },[])
-    // console.log(notification)
+
+function Notification({showNav,notification,socket}) {
+   
     return (
         <>
         <div className="Mid">
@@ -31,29 +21,26 @@ function Notification({showNav}) {
                     </div>
                 </nav>
             </div>
-
-            {notify.map((data,index) => {
+            {/* <div style={{color:'#fff',fontSize:'25px'}}>{notification && notification}</div> */}
+            {notification && notification?.map((data,index) => {
                 return (
                     <div key={index} style={{ padding: "1.5em", border: "1px solid #38444D" }}>
                         <div className="notify" style={{ display: "flex" }}>
-                            {data.id === 1 ? <svg viewBox="0 0 24 24" aria-hidden="true" className="blue r-1cvl2hr r-4qtqp9 r-yyyyoo r-yucp9h r-dnmrzs r-bnwqim r-1plcrui r-lrvibr">
-                                <g><path d="M11.996 2c-4.062 0-7.49 3.021-7.999 7.051L2.866 18H7.1c.463 2.282 2.481 4 4.9 4s4.437-1.718 4.9-4h4.236l-1.143-8.958C19.48 5.017 16.054 2 11.996 2zM9.171 18h5.658c-.412 1.165-1.523 2-2.829 2s-2.417-.835-2.829-2z"></path></g></svg>
-                                : <svg viewBox="0 0 24 24" aria-hidden="true" className="likee r-vkub15 r-4qtqp9 r-yyyyoo r-yucp9h r-dnmrzs r-bnwqim r-1plcrui r-lrvibr">
-                                    <g>
-                                        <path d="M20.884 13.19c-1.351 2.48-4.001 5.12-8.379 7.67l-.503.3-.504-.3c-4.379-2.55-7.029-5.19-8.382-7.67-1.36-2.5-1.41-4.86-.514-6.67.887-1.79 2.647-2.91 4.601-3.01 1.651-.09 3.368.56 4.798 2.01 1.429-1.45 3.146-2.1 4.796-2.01 1.954.1 3.714 1.22 4.601 3.01.896 1.81.846 4.17-.514 6.67z">
-                                        </path>
-                                    </g>
-                                </svg>
+                            {data.operationType === 1 ? <svg viewBox="0 0 24 24" aria-hidden="true" style={{fill:'rgb(249, 24, 128)'}}><g><path d="M20.884 13.19c-1.351 2.48-4.001 5.12-8.379 7.67l-.503.3-.504-.3c-4.379-2.55-7.029-5.19-8.382-7.67-1.36-2.5-1.41-4.86-.514-6.67.887-1.79 2.647-2.91 4.601-3.01 1.651-.09 3.368.56 4.798 2.01 1.429-1.45 3.146-2.1 4.796-2.01 1.954.1 3.714 1.22 4.601 3.01.896 1.81.846 4.17-.514 6.67z"></path></g></svg>
+                                : data.operationType === 2 ? <svg viewBox="0 0 24 24" aria-hidden="true" style={{fill:'rgb(29, 155, 240)'}}><g>
+                                    <path d="M4 4.5C4 3.12 5.119 2 6.5 2h11C18.881 2 20 3.12 20 4.5v18.44l-8-5.71-8 5.71V4.5z"></path></g></svg>
+                                 : ""
                             }
-                            <img src={data.userimg} style={{ width: "32px", borderRadius: "1.2em", marginLeft: "1em" }} />
+                            <img src={data.img} style={{ width: "32px", borderRadius: "1.2em", marginLeft: "1em" }} />
                         </div>
                         <div>
-                            <p style={{ fontSize: "15px", color: "#F7F9F9", padding: "1em 0", paddingLeft: "2.5em" }}>{data.notifyvalue}</p>
+                            <p style={{ fontSize: "15px", color: "#F7F9F9", padding: "1em 0", paddingLeft: "2.5em" }}>
+                                <span style={{fontWeight:'700'}}>{data.userName}</span>
+                                {data.operationType === 1 ? " liked your post" : data.operationType === 2 ? " bookmark your post": ''}</p>
                         </div>
                     </div>
                 )
-            })
-            }
+            })}
         </div>
         {showNav && <BottomNavbar/>}
         </>

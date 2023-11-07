@@ -139,6 +139,7 @@ function Midsec({socket}) {
                                 postUser={data?.owner}
                                 user_id={userData?._id}
                                 socket={socket}
+                                userImg={(profileData?.details) && profileData.details?.Avatar.url}
                             />
                 })}    
         </div>

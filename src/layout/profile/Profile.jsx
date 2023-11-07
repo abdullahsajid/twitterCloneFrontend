@@ -35,7 +35,7 @@ function Profile({setEdit,edit,showNav,socket}) {
         return null
     }
     const getEmail = userData.email.split('@')[0]
-    // console.log(tweets)
+    
     
     
     return (
@@ -108,6 +108,7 @@ function Profile({setEdit,edit,showNav,socket}) {
                                 postUser={data?.owner}
                                 user_id={userData?._id}
                                 socket={socket}
+                                userImg={(user?.details) && user.details?.Avatar.url}
                             />
                 })}
             </div>

@@ -190,10 +190,9 @@ export const gettingTweets = () => async (dispatch) => {
     }
 }
 
-export const postLike = (_id) => async (dispatch) => {
+export const postLike = createAsyncThunk('postLike/likeUnlike', async (_id) => {
     try{
         const token = cookie.get('token')
-        dispatch(likeReq())
         const{data} = await axios.get(`${REACT_APP_BASE_URL}/postLike/${_id}`,
             {
                 headers:{
@@ -204,11 +203,11 @@ export const postLike = (_id) => async (dispatch) => {
                 withCredentials: true
             }
         )
-        dispatch(likeSuccess(data))
+        return data
     }catch(error){
-        dispatch(likeFail())
+        return error
     }
-}
+})
 
 export const postComment = createAsyncThunk('postComment/comment', async ({_id,comment}) => {
     try{

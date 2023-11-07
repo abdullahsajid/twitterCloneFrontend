@@ -59,6 +59,7 @@ function Comment({showNav,socket}){
         e.preventDefault()
         try{
             const _id = location.state._id
+            const loginUserName = user.details?.userName
             const bookMarkPost = await dispatch(bookmarkPost({_id}))
             if(bookMarkPost){
                 toast.success(`${bookMarkPost.payload.message}`,{
@@ -68,8 +69,10 @@ function Comment({showNav,socket}){
                       background: '#15202B',
                       color: '#fff',
                   }})
+                  if(bookMarkPost.payload.message == "Post Bookmark!"){
+                    socket?.emit("sendNotification",{receiverName:location.state.name,senderName:loginUserName,img:location.state.userImg,type:2})
+                  }
             }
-            
         }catch(error){
             console.log(error)
         }

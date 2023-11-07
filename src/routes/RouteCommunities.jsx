@@ -2,11 +2,11 @@ import React from 'react'
 import Leftsec from '../layout/main/Leftsec'
 import Communities from '../layout/communication/Communities'
 import Rightsec from '../layout/main/Rightsec'
-const RouteCommunities = () => {
+const RouteCommunities = ({notification}) => {
   return (
     <div>
       <div className='sub-container'>
-        <Leftsec/><Communities/><Rightsec/>
+        <Leftsec notification={notification}/><Communities/><Rightsec/>
       </div>
     </div>
   )

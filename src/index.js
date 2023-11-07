@@ -22,29 +22,41 @@ const ENDPOINT = 'http://localhost:4000/'
 // if(process.env.NODE_ENV === 'production'){
 //   disableReactDevTools()
 // }
-const socket = io(ENDPOINT, {transports: ["websocket","polling"]})
+const RootComponent = () => {
+  const[notification,setNotification] = useState('')
+  const socket = io(ENDPOINT, {transports: ["websocket","polling"]})
+
+  useEffect(()=>{
+    socket?.on("gottaNotification",({senderName,img,type})=>{
+        setNotification((prev) => [...prev,{userName:senderName,img:img,operationType:type}])
+      })
+  },[socket])
+
+
+  return(
+    <React.StrictMode>
+      <Provider store={store}> 
+        <BrowserRouter>
+        <Routes>
+            <Route element={<ProtectedRoutes/>}>
+              <Route path="/home" element={<App socket={socket} notification={notification}/>} />
+              <Route path='/explore' element={<RouteExplore notification={notification}/>} />
+              <Route path='/communities' element={<RouteCommunities notification={notification}/>} />
+              <Route path='/notification' element={<RouteNotification socket={socket} notification={notification}/>} />
+              <Route path='/message' element={<RouteMessage notification={notification}/>} />
+              <Route path='/bookmark' element={<RouteBookmark notification={notification}/>} />
+              <Route path='/profile/:id' element={<RouteProfile socket={socket} notification={notification}/>} />
+              <Route path='/comments' element={<RouteComment socket={socket} />}/>
+              <Route path='/ViewProfile' element={<RouteViewProfile/>}/>
+            </Route>
+            <Route path='/' element={<Home/>}/>
+        </Routes> 
+        </BrowserRouter>
+        <Toaster/>
+      </Provider>
+    </React.StrictMode>
+  );
+}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <Provider store={store}> 
-      <BrowserRouter>
-       <Routes>
-          <Route element={<ProtectedRoutes/>}>
-            <Route path="/home" element={<App socket={socket}/>} />
-            <Route path='/explore' element={<RouteExplore/>} />
-            <Route path='/communities' element={<RouteCommunities/>} />
-            <Route path='/notification' element={<RouteNotification socket={socket}/>} />
-            <Route path='/message' element={<RouteMessage/>} />
-            <Route path='/bookmark' element={<RouteBookmark/>} />
-            <Route path='/profile/:id' element={<RouteProfile socket={socket}/>} />
-            <Route path='/comments' element={<RouteComment socket={socket}/>}/>
-            <Route path='/ViewProfile' element={<RouteViewProfile/>}/>
-          </Route>
-          <Route path='/' element={<Home/>}/>
-        </Routes> 
-      </BrowserRouter>
-      <Toaster/>
-    </Provider>
-  </React.StrictMode>
-);
+root.render(<RootComponent/>)

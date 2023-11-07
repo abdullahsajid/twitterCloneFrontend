@@ -6,14 +6,14 @@ import EditProfile from '../layout/profile/EditProfile'
 import Comments from '../layout/Comments/Comment'
 import ViewProfile from '../layout/ViewProfile'
 
-const RouteViewProfile = () => {
+const RouteViewProfile = ({notification}) => {
   const[edit,setEdit] = useState(false)
   const[showCommentsCompon,setCompon] = useState(false)
 
   return (
     <div>
         <div className='sub-container relative z-0'>
-            <Leftsec edit={edit}/>
+            <Leftsec edit={edit} notification={notification}/>
                 {/* {showCommentsCompon ? <Comments/> :
                 <Profile setEdit={setEdit} edit={edit} compon={showCommentsCompon} setCompon={setCompon}/>}  */}
               <ViewProfile/>
