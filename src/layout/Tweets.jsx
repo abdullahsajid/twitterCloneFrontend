@@ -44,7 +44,7 @@ function Tweets({_id,user_id,img,name,mention,blog,userLike,userLikes,userCommen
     setDeletePost(!toggleDelete)
     dispatch(gettingTweets())
   }
-  const verifyUser = userData?.posts.includes(_id)
+  const verifyUser = userData && userData.posts?.includes(_id)
   // const userr = useSelector((state) => state.viewProfile.viewUser.data)
   const profileHandler = () => {
     dispatch(ViewProfile({_id}))

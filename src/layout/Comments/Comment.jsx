@@ -88,7 +88,7 @@ function Comment({showNav,socket}){
     
     useEffect(() => {
         setlikes(location.state.userLike)
-      },[location.state.userLike])
+    },[location.state.userLike])
     
       useEffect(() => {
         setActiveLike(location.state.userLikes?.includes(location.state.user_id));
@@ -102,7 +102,7 @@ function Comment({showNav,socket}){
         return () => {
             socket?.off(`like:${location.state._id}`)
         }
-      },[])
+    },[])
 
   return (
     <>
