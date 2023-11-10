@@ -705,6 +705,9 @@ body{
     text-align: center;
     font-size: 13px;
 }
+.active-tab-item{
+    font-weight: 900;
+}
 @media (max-width: 1210px){
     .left{
         width: 60px;

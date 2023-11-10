@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState} from 'react';
 import '../../App.css';
 import { Link, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,19 +9,14 @@ import toast,{ Toaster } from 'react-hot-toast';
 
 const cookie = new Cookies()
 function Leftsec({edit,notification}) {
-  const[showBadge,setShowBadge] = useState(true)
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const user = useSelector((state) => state.user.user)
   const {loading} = useSelector((state) => state.user)
   const[toggleLogout,setLogout] = useState(false)
-  
+
   const handleChange = () => {
     setLogout(!toggleLogout)
-  }
-
-  const handleBadge = () => {
-    setShowBadge(false)
   }
 
   const logout = async ()  => {
@@ -55,11 +50,6 @@ function Leftsec({edit,notification}) {
     dispatch(getProfile())
   },[dispatch])
 
-  useEffect(() => {
-    setShowBadge()
-  },[notification])
-
-
   // let getEmail;
   // const userEmail = async () => {
   //   getEmail = await user.email.split('@')[0]
@@ -72,7 +62,7 @@ function Leftsec({edit,notification}) {
       <div className={`${edit ? 'left opacity-50': 'left'}`}>
         <div className="left-element">
           <div>
-            <Link to="/home" style={{ textDecoration: "none" }}>
+            <Link to="/home" style={{ textDecoration: "none" }} >
               <div className="twitter-img">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <g><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></g>
@@ -80,7 +70,7 @@ function Leftsec({edit,notification}) {
               </div>
             </Link>
             <div className="navigation">
-              <Link to='/home' style={{ textDecoration: "none" }}>
+              <Link to='/home' style={{ textDecoration: "none" }} >
                 <div className="nav-links">
                   <div className="nav-svg">
                     <svg viewBox="0 0 24 24" aria-hidden="true" ><g><path d="M12 1.696L.622 8.807l1.06 1.696L3 9.679V19.5C3 20.881 4.119 22 5.5 22h13c1.381 0 2.5-1.119 2.5-2.5V9.679l1.318.824 1.06-1.696L12 1.696zM12 16.5c-1.933 0-3.5-1.567-3.5-3.5s1.567-3.5 3.5-3.5 3.5 1.567 3.5 3.5-1.567 3.5-3.5 3.5z"></path></g></svg>
@@ -104,7 +94,7 @@ function Leftsec({edit,notification}) {
                   <a href="">Communities</a>
                 </div>
               </Link>
-              <Link to="/notification" style={{ textDecoration: "none" }} onClick={handleBadge}>
+              <Link to="/notification" style={{ textDecoration: "none" }}>
                 <div className="nav-links" style={{ width: "204px",position:'relative' }}>
                   <div className="nav-svg">
                     <svg viewBox="0 0 24 24" aria-hidden="true"><g><path d="M19.993 9.042C19.48 5.017 16.054 2 11.996 2s-7.49 3.021-7.999 7.051L2.866 18H7.1c.463 2.282 2.481 4 4.9 4s4.437-1.718 4.9-4h4.236l-1.143-8.958zM12 20c-1.306 0-2.417-.835-2.829-2h5.658c-.412 1.165-1.523 2-2.829 2zm-6.866-4l.847-6.698C6.364 6.272 8.941 4 11.996 4s5.627 2.268 6.013 5.295L18.864 16H5.134z"></path></g></svg>

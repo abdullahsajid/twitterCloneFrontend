@@ -3,7 +3,7 @@ import { followUser,followOtherUser,ViewProfile} from "../action/UserAction";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function SuggestionFolks({_id,img,name,tag,userId}) {
+function SuggestionFolks({_id,img,name,tag,choice,userId}) {
     const dispatch = useDispatch()
     const navigation = useNavigate()
     const [followOrUnfollow,setCondition] = useState(false)
@@ -17,6 +17,7 @@ function SuggestionFolks({_id,img,name,tag,userId}) {
     //     dispatch(ViewProfile({_id}))
     //     navigation(`/ViewProfile`)
     // }
+
     return (
         <>
         <div className="folksids">
@@ -30,7 +31,7 @@ function SuggestionFolks({_id,img,name,tag,userId}) {
                     </div>
             </div>
                 <div className="folksbtn" onClick={followUnfollow}>
-                    <button className="left-tweet-btn" style={{color:'#000',display:"block"}}>Follow</button>
+                    <button className="left-tweet-btn" style={{color:'#000',display:"block"}}>{choice}</button>
                 </div>
         </div>
         </>

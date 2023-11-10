@@ -10,7 +10,7 @@ function ExploreRight() {
     useEffect(() => {
         dispatch(getRecommendedUser())
     },[dispatch])
-    const {recommendedUser} = useSelector((state) => state.recommendedUser.recommendedUser)
+    const {newRecommender} = useSelector((state) => state.recommendedUser.recommendedUser)
     const userData = useSelector((state) => state.user.user)
     return (
         <div className="right">
@@ -20,16 +20,17 @@ function ExploreRight() {
                         <p style={{ fontSize: "20px", fontWeight: "bold", marginBottom: ".5em" }}>Who to follow</p>
                     </div>
                     <div className="folksmain">
-                        {recommendedUser?.map((data) => {
-                            let profileId = allProfile?.find((item) => item._id == data.profileDetails)
+                        {newRecommender?.map((data) => {
+                            let profileId = allProfile?.find((item) => item._id == data._doc.profileDetails)
                             // let items = (userData?._id == data?._id) ? setCondition(true) : setCondition(false)
                             
                             return <SuggestionFolks
-                                        _id={data?._id} 
+                                        _id={data?._doc._id} 
                                         img={profileId?.Avatar.url} 
                                         name={profileId?.userName} 
-                                        tag={data?.email}
+                                        tag={data?._doc.email}
                                         userId={userData?._id}
+                                        choice={data.type.choice} 
                                     />
                         })}
                     </div>

@@ -433,7 +433,6 @@ export const ViewProfile = createAsyncThunk("viewProfile/profile", async ({_id})
                 withCredentials: true
             }
         )
-        console.log(data)
         return data
     }catch(err){
         return err.message
